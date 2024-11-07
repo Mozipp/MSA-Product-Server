@@ -1,12 +1,13 @@
 package com.mozipp.product.domain.product.converter;
 
+import com.mozipp.product.domain.product.dto.DesignerProductRequest;
 import com.mozipp.product.domain.product.dto.DesignerProductResponse;
 import com.mozipp.product.domain.product.entity.DesignerProduct;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductConverter {
+public class DesignerProductConverter {
 
     public static List<DesignerProductResponse> toDesignerProductResponse(List<DesignerProduct> designerProducts) {
         List<DesignerProductResponse> designerProductResponses = new ArrayList<>();
@@ -23,5 +24,15 @@ public class ProductConverter {
             designerProductResponses.add(designerProductResponse);
         }
         return designerProductResponses;
+    }
+
+    public static DesignerProduct toDesignerProductCreateDto(DesignerProductRequest request) {
+        return DesignerProduct.builder()
+                .title(request.getTitle())
+                .description(request.getDescription())
+                .design(request.getDesign())
+                .modelPreferDescription(request.getModelPreferDescription())
+                .preferBreed(request.getPreferBreed())
+                .build();
     }
 }

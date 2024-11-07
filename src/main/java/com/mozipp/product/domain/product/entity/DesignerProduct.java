@@ -4,8 +4,10 @@ import com.mozipp.product.domain.BaseTimeEntity;
 import com.mozipp.product.domain.report.entity.Report;
 import com.mozipp.product.domain.request.entity.ReservationRequest;
 import com.mozipp.product.domain.review.entity.Review;
+import com.mozipp.product.test.designer.entity.Designer;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,7 +29,6 @@ public class DesignerProduct extends BaseTimeEntity {
     private String design;
     private String modelPreferDescription;
     private String preferBreed;
-    private String reservationDate; // 미정
 
     @OneToMany(mappedBy = "designerProduct")
     private List<Report> reports = new ArrayList<>();
@@ -37,4 +38,21 @@ public class DesignerProduct extends BaseTimeEntity {
 
     @OneToOne(mappedBy = "designerProduct")
     private ReservationRequest reservationRequest;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "designer_id")
+    private Designer designer;
+
+    @Builder
+    public DesignerProduct(String title, String description, String design, String modelPreferDescription, String preferBreed) {
+        this.title = title;
+        this.description = description;
+        this.design = design;
+        this.modelPreferDescription = modelPreferDescription;
+        this.preferBreed = preferBreed;
+    }
+
+    public void updateDesigner(Designer designer) {
+        this.designer = designer;
+    }
 }
