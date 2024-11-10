@@ -1,7 +1,7 @@
 package com.mozipp.product.domain.product.service;
 
 import com.mozipp.product.domain.product.converter.DesignerProductConverter;
-import com.mozipp.product.domain.product.dto.DesignerProductRequest;
+import com.mozipp.product.domain.product.dto.DesignerProductCreateDto;
 import com.mozipp.product.domain.product.dto.DesignerProductResponse;
 import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.product.repository.DesignerProductRepository;
@@ -25,7 +25,7 @@ public class DesignerProductService {
     }
 
     @Transactional
-    public void createDesignerProduct(User user, DesignerProductRequest request) {
+    public void createDesignerProduct(User user, DesignerProductCreateDto request) {
         Designer designer = (Designer) user;
         DesignerProduct designerProduct = DesignerProductConverter.toDesignerProductCreateDto(request);
         designer.addProduct(designerProduct);

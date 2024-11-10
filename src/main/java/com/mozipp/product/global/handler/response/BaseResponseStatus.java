@@ -32,6 +32,8 @@ public enum BaseResponseStatus {
      * 404 NOT_FOUND 잘못된 리소스 접근
      */
     NOT_FOUND(false, 404, HttpStatus.NOT_FOUND, "요청한 리소스를 찾을 수 없음"),
+    NOT_FOUND_RESERVATION_REQUEST(false, 40401, HttpStatus.NOT_FOUND, "해당 Reservation Request를 찾을 수 없음"),
+    NOT_FOUND_DESIGNER_PRODUCT(false, 40402, HttpStatus.NOT_FOUND, "해당 Designer Product를 찾을 수 없음"),
 
     /**
      * 409 CONFLICT 중복된 리소스

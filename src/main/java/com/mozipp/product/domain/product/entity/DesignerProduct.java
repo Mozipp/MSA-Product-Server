@@ -29,6 +29,7 @@ public class DesignerProduct extends BaseTimeEntity {
     private String design;
     private String modelPreferDescription;
     private String preferBreed;
+    private ProductStatus productStatus = ProductStatus.AVAILABLE;
 
     @OneToMany(mappedBy = "designerProduct")
     private List<Report> reports = new ArrayList<>();
@@ -54,5 +55,9 @@ public class DesignerProduct extends BaseTimeEntity {
 
     public void updateDesigner(Designer designer) {
         this.designer = designer;
+    }
+
+    public void updateProductStatus(ProductStatus productStatus) {
+        this.productStatus = productStatus;
     }
 }

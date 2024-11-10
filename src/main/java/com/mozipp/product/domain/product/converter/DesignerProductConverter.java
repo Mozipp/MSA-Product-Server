@@ -1,6 +1,6 @@
 package com.mozipp.product.domain.product.converter;
 
-import com.mozipp.product.domain.product.dto.DesignerProductRequest;
+import com.mozipp.product.domain.product.dto.DesignerProductCreateDto;
 import com.mozipp.product.domain.product.dto.DesignerProductResponse;
 import com.mozipp.product.domain.product.entity.DesignerProduct;
 
@@ -19,6 +19,7 @@ public class DesignerProductConverter {
                     .design(designerProduct.getDesign())
                     .modelPreferDescription(designerProduct.getModelPreferDescription())
                     .preferBreed(designerProduct.getPreferBreed())
+                    .productStatus(designerProduct.getProductStatus())
                     .createdAt(designerProduct.getCreatedAt())
                     .build();
             designerProductResponses.add(designerProductResponse);
@@ -26,10 +27,10 @@ public class DesignerProductConverter {
         return designerProductResponses;
     }
 
-    public static DesignerProduct toDesignerProductCreateDto(DesignerProductRequest request) {
+    public static DesignerProduct toDesignerProductCreateDto(DesignerProductCreateDto request) {
         return DesignerProduct.builder()
                 .title(request.getTitle())
-                .description(request.getDescription())
+                .description(request.getIntroduction())
                 .design(request.getDesign())
                 .modelPreferDescription(request.getModelPreferDescription())
                 .preferBreed(request.getPreferBreed())

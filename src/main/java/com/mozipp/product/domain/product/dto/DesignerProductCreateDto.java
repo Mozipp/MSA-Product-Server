@@ -5,9 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DesignerProductRequest {
+public class DesignerProductCreateDto {
     private String title;
-    private String description;
+    private String introduction;
     private String design;
     private String modelPreferDescription;
     private String preferBreed;

@@ -3,6 +3,7 @@ package com.mozipp.product.domain.reservation.entity;
 import com.mozipp.product.domain.request.entity.ReservationRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,11 +20,19 @@ public class Reservation {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private ReservationStatus status;
+    private ReservationStatus status = ReservationStatus.CONFIRMED;
 
     private LocalDateTime reservationDate;
 
     @OneToOne
     @JoinColumn(name = "reservation_request_id")
     private ReservationRequest reservationRequest;
+
+    @Builder
+    public Reservation(LocalDateTime reservationDate, ReservationRequest reservationRequest) {
+        this.reservationDate = reservationDate;
+        this.reservationRequest = reservationRequest;
+
+        reservationRequest.associateReservation(this);
+    }
 }

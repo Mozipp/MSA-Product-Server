@@ -1,6 +1,6 @@
 package com.mozipp.product.domain.product.controller;
 
-import com.mozipp.product.domain.product.dto.DesignerProductRequest;
+import com.mozipp.product.domain.product.dto.DesignerProductCreateDto;
 import com.mozipp.product.domain.product.dto.DesignerProductResponse;
 import com.mozipp.product.domain.product.service.DesignerProductService;
 import com.mozipp.product.global.handler.response.BaseResponse;
@@ -29,7 +29,7 @@ public class DesignerProductController {
 
     // Designer 상품 등록
     @PostMapping
-    public BaseResponse<Object> createDesignerProduct(@RequestBody DesignerProductRequest request, @AuthenticationPrincipal UserDetails userDetails){
+    public BaseResponse<Object> createDesignerProduct(@RequestBody DesignerProductCreateDto request, @AuthenticationPrincipal UserDetails userDetails){
         User user = userFindService.findByUserDetails(userDetails);
         designerProductService.createDesignerProduct(user, request);
         return BaseResponse.success();
