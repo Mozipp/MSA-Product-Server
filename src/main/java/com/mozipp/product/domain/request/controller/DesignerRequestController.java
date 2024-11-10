@@ -1,7 +1,7 @@
 package com.mozipp.product.domain.request.controller;
 
 import com.mozipp.product.domain.request.dto.DesignerRequestListDto;
-import com.mozipp.product.domain.request.service.DesignerReservationRequestService;
+import com.mozipp.product.domain.request.service.DesignerRequestService;
 import com.mozipp.product.global.handler.response.BaseResponse;
 import com.mozipp.product.test.user.entity.User;
 import com.mozipp.product.test.user.service.UserFindService;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/designer/reservation-request")
 public class DesignerRequestController {
 
-    private final DesignerReservationRequestService designerReservationRequestService;
+    private final DesignerRequestService designerReservationRequestService;
     private final UserFindService userFindService;
 
     // Designer 예약 요청 리스트 조회

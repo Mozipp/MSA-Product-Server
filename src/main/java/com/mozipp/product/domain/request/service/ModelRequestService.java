@@ -5,7 +5,7 @@ import com.mozipp.product.domain.product.entity.ProductStatus;
 import com.mozipp.product.domain.product.repository.DesignerProductRepository;
 import com.mozipp.product.domain.request.converter.ReservationRequestConverter;
 import com.mozipp.product.domain.request.dto.ModelRequestListDto;
-import com.mozipp.product.domain.request.dto.ModelReservationRequestDto;
+import com.mozipp.product.domain.request.dto.ModelRequestCreateDto;
 import com.mozipp.product.domain.request.entity.ReservationRequest;
 import com.mozipp.product.domain.request.repository.ReservationRequestRepository;
 import com.mozipp.product.global.handler.BaseException;
@@ -27,7 +27,7 @@ public class ModelRequestService {
     private final DesignerProductRepository designerProductRepository;
 
     @Transactional
-    public void createModelReservationRequest(User user, ModelReservationRequestDto request) {
+    public void createModelReservationRequest(User user, ModelRequestCreateDto request) {
         Model model = (Model) user;
 
         DesignerProduct designerProduct = designerProductRepository.findById(request.getDesignerProductId())

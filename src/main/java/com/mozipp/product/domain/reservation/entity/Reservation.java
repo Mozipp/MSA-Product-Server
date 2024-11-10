@@ -32,7 +32,6 @@ public class Reservation {
     public Reservation(LocalDateTime reservationDate, ReservationRequest reservationRequest) {
         this.reservationDate = reservationDate;
         this.reservationRequest = reservationRequest;
-
         reservationRequest.associateReservation(this);
     }
 }

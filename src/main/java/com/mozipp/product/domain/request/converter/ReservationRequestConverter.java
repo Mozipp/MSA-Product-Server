@@ -32,7 +32,7 @@ public class ReservationRequestConverter {
     }
 
 
-    public static ReservationRequest toModelReservationRequestDto(Model model, DesignerProduct designerProduct, ModelReservationRequestDto request) {
+    public static ReservationRequest toModelReservationRequestDto(Model model, DesignerProduct designerProduct, ModelRequestCreateDto request) {
         return ReservationRequest.builder()
                 .model(model)
                 .designerProduct(designerProduct)

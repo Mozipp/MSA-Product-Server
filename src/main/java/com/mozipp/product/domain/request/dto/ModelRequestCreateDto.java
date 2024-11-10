@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class ModelReservationRequestDto {
+public class ModelRequestCreateDto {
     private Long designerProductId;
     private String modelDescription;
     private LocalDateTime reservationRequestDate;
