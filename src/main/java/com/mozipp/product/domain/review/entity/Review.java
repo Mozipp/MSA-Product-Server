@@ -19,16 +19,18 @@ public class Review extends BaseTimeEntity {
     private Long id;
 
     private String reviewContent;
-    private Long reviewee;
+    private Long userId;
+    private Long targetId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "designer_product_id")
     private DesignerProduct designerProduct;
 
     @Builder
-    public Review(String reviewContent, Long reviewee, DesignerProduct designerProduct) {
+    public Review(String reviewContent, Long userId, Long targetId, DesignerProduct designerProduct) {
         this.reviewContent = reviewContent;
-        this.reviewee = reviewee;
+        this.userId = userId;
+        this.targetId = targetId;
         this.designerProduct = designerProduct;
     }
 }

@@ -42,7 +42,7 @@ public class ModelRequestService {
     public List<ModelRequestListDto> getModelReservationRequest(User user) {
         Model model = (Model) user;
 
-        List<ReservationRequest> reservationRequests = reservationRequestRepository.findAllByModel(model);
+        List<ReservationRequest> reservationRequests = reservationRequestRepository.findAllByModel_Id(model.getId());
         List<ModelRequestListDto> modelRequestListDtos = new ArrayList<>();
 
         for (ReservationRequest request : reservationRequests) {
