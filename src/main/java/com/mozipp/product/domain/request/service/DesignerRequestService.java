@@ -3,7 +3,7 @@ package com.mozipp.product.domain.request.service;
 import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.product.entity.ProductStatus;
 import com.mozipp.product.domain.request.converter.ReservationRequestConverter;
-import com.mozipp.product.domain.request.dto.ReservationRequestListDto;
+import com.mozipp.product.domain.request.dto.DesignerRequestListDto;
 import com.mozipp.product.domain.request.dto.ReviewDto;
 import com.mozipp.product.domain.request.entity.ReservationRequest;
 import com.mozipp.product.domain.request.repository.ReservationRequestRepository;
@@ -23,7 +23,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class DesignerReservationRequestService {
+public class DesignerRequestService {
 
     private final ReservationRequestRepository reservationRequestRepository;
     private final ReservationRepository reservationRepository;
@@ -62,15 +62,15 @@ public class DesignerReservationRequestService {
         reservationRequestRepository.save(request);
     }
 
-    public List<ReservationRequestListDto> getReservationRequestList(User user) {
+    public List<DesignerRequestListDto> getReservationRequestList(User user) {
         Designer designer = (Designer) user;
         List<ReservationRequest> reservationRequests = reservationRequestRepository.findByDesignerProduct_Designer_Id(designer.getId());
-        List<ReservationRequestListDto> reservationRequestList = new ArrayList<>();
+        List<DesignerRequestListDto> reservationRequestList = new ArrayList<>();
 
         for(ReservationRequest request : reservationRequests) {
             Long modelId = request.getModel().getId();
             List<ReviewDto> reviews = modelReviewService.getReviewsForModel(modelId);
-            ReservationRequestListDto dto = ReservationRequestConverter.toDesignerReservationRequestDto(request, reviews);
+            DesignerRequestListDto dto = ReservationRequestConverter.toDesignerReservationRequestDto(request, reviews);
             reservationRequestList.add(dto);
         }
 

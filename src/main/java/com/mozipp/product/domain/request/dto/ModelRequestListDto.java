@@ -10,18 +10,18 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ReservationRequestListDto {
+public class ModelRequestListDto {
     private Long reservationRequestId;
     private RequestStatus reservationRequestStatus;
-    private ReservationRequestModelDto model;
+    private String modelDescription;
     private LocalDateTime reservationRequestDate;
     private LocalDateTime createdAt;
 
     @Builder
-    public ReservationRequestListDto(Long reservationRequestId, RequestStatus reservationRequestStatus, ReservationRequestModelDto model, LocalDateTime reservationRequestDate, LocalDateTime createdAt) {
+    public ModelRequestListDto(Long reservationRequestId, RequestStatus reservationRequestStatus, String modelDescription, LocalDateTime reservationRequestDate, LocalDateTime createdAt) {
         this.reservationRequestId = reservationRequestId;
         this.reservationRequestStatus = reservationRequestStatus;
-        this.model = model;
+        this.modelDescription = modelDescription;
         this.reservationRequestDate = reservationRequestDate;
         this.createdAt = createdAt;
     }

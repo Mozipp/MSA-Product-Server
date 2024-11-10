@@ -1,10 +1,7 @@
 package com.mozipp.product.domain.request.converter;
 
 import com.mozipp.product.domain.product.entity.DesignerProduct;
-import com.mozipp.product.domain.request.dto.ModelReservationRequestDto;
-import com.mozipp.product.domain.request.dto.ReservationRequestListDto;
-import com.mozipp.product.domain.request.dto.ReservationRequestModelDto;
-import com.mozipp.product.domain.request.dto.ReviewDto;
+import com.mozipp.product.domain.request.dto.*;
 import com.mozipp.product.domain.request.entity.RequestStatus;
 import com.mozipp.product.domain.request.entity.ReservationRequest;
 import com.mozipp.product.test.model.entity.Model;
@@ -13,7 +10,7 @@ import java.util.List;
 
 public class ReservationRequestConverter {
 
-    public static ReservationRequestListDto toDesignerReservationRequestDto(ReservationRequest request, List<ReviewDto> reviews) {
+    public static DesignerRequestListDto toDesignerReservationRequestDto(ReservationRequest request, List<ReviewDto> reviews) {
         Model model = request.getModel();
 
         ReservationRequestModelDto modelDto = ReservationRequestModelDto.builder()
@@ -25,7 +22,7 @@ public class ReservationRequestConverter {
                 .reviews(reviews)
                 .build();
 
-        return ReservationRequestListDto.builder()
+        return DesignerRequestListDto.builder()
                 .reservationRequestId(request.getId())
                 .reservationRequestStatus(request.getStatus())
                 .model(modelDto)
@@ -42,6 +39,16 @@ public class ReservationRequestConverter {
                 .modelDescription(request.getModelDescription())
                 .reservationRequestDate(request.getReservationRequestDate())
                 .status(RequestStatus.PENDING)
+                .build();
+    }
+
+    public static ModelRequestListDto toModelRequestListDto(ReservationRequest request) {
+        return ModelRequestListDto.builder()
+                .reservationRequestId(request.getId())
+                .reservationRequestStatus(request.getStatus())
+                .modelDescription(request.getModelDescription())
+                .reservationRequestDate(request.getReservationRequestDate())
+                .createdAt(request.getCreatedAt())
                 .build();
     }
 }

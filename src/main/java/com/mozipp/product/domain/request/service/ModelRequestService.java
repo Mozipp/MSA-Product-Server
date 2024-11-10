@@ -4,6 +4,7 @@ import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.product.entity.ProductStatus;
 import com.mozipp.product.domain.product.repository.DesignerProductRepository;
 import com.mozipp.product.domain.request.converter.ReservationRequestConverter;
+import com.mozipp.product.domain.request.dto.ModelRequestListDto;
 import com.mozipp.product.domain.request.dto.ModelReservationRequestDto;
 import com.mozipp.product.domain.request.entity.ReservationRequest;
 import com.mozipp.product.domain.request.repository.ReservationRequestRepository;
@@ -15,15 +16,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-public class ModelReservationRequestService {
+public class ModelRequestService {
 
     private final ReservationRequestRepository reservationRequestRepository;
     private final DesignerProductRepository designerProductRepository;
 
     @Transactional
-    public void modelReservationRequest(User user, ModelReservationRequestDto request) {
+    public void createModelReservationRequest(User user, ModelReservationRequestDto request) {
         Model model = (Model) user;
 
         DesignerProduct designerProduct = designerProductRepository.findById(request.getDesignerProductId())
@@ -33,5 +37,19 @@ public class ModelReservationRequestService {
         reservationRequestRepository.save(reservationRequest);
 
         designerProduct.updateProductStatus(ProductStatus.RESERVED);
+    }
+
+    public List<ModelRequestListDto> getModelReservationRequest(User user) {
+        Model model = (Model) user;
+
+        List<ReservationRequest> reservationRequests = reservationRequestRepository.findAllByModel(model);
+        List<ModelRequestListDto> modelRequestListDtos = new ArrayList<>();
+
+        for (ReservationRequest request : reservationRequests) {
+            ModelRequestListDto dto = ReservationRequestConverter.toModelRequestListDto(request);
+            modelRequestListDtos.add(dto);
+        }
+
+        return modelRequestListDtos;
     }
 }
