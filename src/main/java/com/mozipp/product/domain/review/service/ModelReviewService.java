@@ -1,10 +1,8 @@
 package com.mozipp.product.domain.review.service;
 
-import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.request.dto.ReviewDto;
-import com.mozipp.product.domain.request.entity.ReservationRequest;
-import com.mozipp.product.domain.request.repository.ReservationRequestRepository;
 import com.mozipp.product.domain.review.entity.Review;
+import com.mozipp.product.domain.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,25 +13,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ModelReviewService {
 
-    private final ReservationRequestRepository reservationRequestRepository;
+    private final ReviewRepository reviewRepository;
 
-    public List<ReviewDto> getReviewsForModel(Long modelId){
-        List<ReservationRequest> requests = reservationRequestRepository.findByModel_Id(modelId);
-
+    public List<ReviewDto> getReviewsForModel(Long modelId) {
+        List<Review> reviews = reviewRepository.findByReviewee(modelId);
         List<ReviewDto> reviewDtos = new ArrayList<>();
 
-        for(ReservationRequest request : requests) {
-            DesignerProduct designerProduct = request.getDesignerProduct();
-            if(designerProduct != null) {
-                for(Review review : designerProduct.getReviews()) {
-                    ReviewDto reviewDto = ReviewDto.builder()
-                            .reviewId(review.getId())
-                            .reviewContent(review.getReviewContent())
-                            .build();
-
-                    reviewDtos.add(reviewDto);
-                }
-            }
+        for (Review review : reviews) {
+            ReviewDto reviewDto = ReviewDto.builder()
+                    .reviewId(review.getId())
+                    .reviewContent(review.getReviewContent())
+                    .build();
+            reviewDtos.add(reviewDto);
         }
 
         return reviewDtos;

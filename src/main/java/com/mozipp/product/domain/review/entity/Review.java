@@ -4,6 +4,7 @@ import com.mozipp.product.domain.BaseTimeEntity;
 import com.mozipp.product.domain.product.entity.DesignerProduct;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,4 +24,11 @@ public class Review extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "designer_product_id")
     private DesignerProduct designerProduct;
+
+    @Builder
+    public Review(String reviewContent, Long reviewee, DesignerProduct designerProduct) {
+        this.reviewContent = reviewContent;
+        this.reviewee = reviewee;
+        this.designerProduct = designerProduct;
+    }
 }
