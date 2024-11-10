@@ -1,11 +1,17 @@
 package com.mozipp.product.domain.reservation.converter;
 
 import com.mozipp.product.domain.product.entity.DesignerProduct;
+import com.mozipp.product.domain.request.dto.ReviewDto;
 import com.mozipp.product.domain.request.entity.ReservationRequest;
+import com.mozipp.product.domain.reservation.dto.DesignerReservationListDto;
 import com.mozipp.product.domain.reservation.dto.ModelReservationListDto;
+import com.mozipp.product.domain.reservation.dto.ReservationListModelDto;
 import com.mozipp.product.domain.reservation.entity.Reservation;
 import com.mozipp.product.test.designer.dto.PetShopDto;
+import com.mozipp.product.test.model.entity.Model;
 import com.mozipp.product.test.petshop.entity.PetShop;
+
+import java.util.List;
 
 public class ReservationConverter {
 
@@ -26,6 +32,28 @@ public class ReservationConverter {
                 .design(designerProduct.getDesign())
                 .reservationStatus(reservation.getStatus())
                 .reservationRequestDate(request.getReservationRequestDate())
+                .createdAt(request.getCreatedAt())
+                .build();
+    }
+
+    public static DesignerReservationListDto toDesignerReservationListDto(Reservation reservation, List<ReviewDto> reviews) {
+        ReservationRequest request = reservation.getReservationRequest();
+        DesignerProduct designerProduct = request.getDesignerProduct();
+        Model model = request.getModel();
+
+        ReservationListModelDto modelDto = ReservationListModelDto.builder()
+                .modelDescription(request.getModelDescription())
+                .breed(model.getBreed())
+                .petImageUrl(model.getPetImageUrl())
+                .reviews(reviews)
+                .build();
+
+        return DesignerReservationListDto.builder()
+                .reservationId(reservation.getId())
+                .design(designerProduct.getDesign())
+                .model(modelDto)
+                .reservationStatus(reservation.getStatus())
+                .reservationDate(reservation.getReservationDate())
                 .createdAt(request.getCreatedAt())
                 .build();
     }
