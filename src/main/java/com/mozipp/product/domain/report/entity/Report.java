@@ -4,6 +4,7 @@ import com.mozipp.product.domain.BaseTimeEntity;
 import com.mozipp.product.domain.product.entity.DesignerProduct;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,9 +19,18 @@ public class Report extends BaseTimeEntity {
     private Long id;
 
     private String reportContent;
-    private Long reportedId;
+    private Long userId;
+    private Long targetId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "designer_product_id")
     private DesignerProduct designerProduct;
+
+    @Builder
+    public Report(String reportContent, Long userId, Long targetId, DesignerProduct designerProduct) {
+        this.reportContent = reportContent;
+        this.userId = userId;
+        this.targetId = targetId;
+        this.designerProduct = designerProduct;
+    }
 }
