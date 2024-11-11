@@ -13,10 +13,10 @@ public class FindModelService {
 
     private final ReservationRequestRepository reservationRequestRepository;
 
-    public Long getDesignerProductIdForModel(Long modelId) {
-        ReservationRequest reservationRequest = reservationRequestRepository.findByModel_Id(modelId)
+    public Long getDesignerProductIdForModel(Long designerProductId) {
+        ReservationRequest reservationRequest = reservationRequestRepository.findByDesignerProduct_Id(designerProductId)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_RESERVATION_REQUEST));
 
-        return reservationRequest.getDesignerProduct().getId();
+        return reservationRequest.getModel().getId();
     }
 }

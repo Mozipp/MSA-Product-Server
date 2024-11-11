@@ -9,8 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface ReservationRequestRepository extends JpaRepository<ReservationRequest, Long> {
-    Optional<ReservationRequest> findByModel_Id(Long modelId);
     List<ReservationRequest> findAllByModel_Id(Long modelId);
     List<ReservationRequest> findByDesignerProduct_Designer_Id(Long designerId);
-
+    Optional<ReservationRequest> findByDesignerProduct_Id(Long designerProductId);
 }
