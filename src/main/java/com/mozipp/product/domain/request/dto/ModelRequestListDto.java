@@ -1,5 +1,6 @@
 package com.mozipp.product.domain.request.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mozipp.product.domain.request.entity.RequestStatus;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -14,7 +15,9 @@ public class ModelRequestListDto {
     private Long reservationRequestId;
     private RequestStatus reservationRequestStatus;
     private String modelDescription;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime reservationRequestDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
 
     @Builder

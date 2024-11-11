@@ -21,6 +21,7 @@ public class DesignerReportController {
     private final DesignerReportService designerReportService;
     private final UserFindService userFindService;
 
+    // Designer 신고 등록
     @PostMapping
     public BaseResponse<Object> createDesignerReport(@RequestBody DesignerReportCreateDto request, @AuthenticationPrincipal UserDetails userDetails) {
         User user = userFindService.findByUserDetails(userDetails);

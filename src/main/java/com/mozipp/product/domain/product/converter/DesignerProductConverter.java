@@ -1,33 +1,43 @@
 package com.mozipp.product.domain.product.converter;
 
 import com.mozipp.product.domain.product.dto.DesignerProductCreateDto;
-import com.mozipp.product.domain.product.dto.DesignerProductResponse;
+import com.mozipp.product.domain.product.dto.DesignerProductListDto;
 import com.mozipp.product.domain.product.entity.DesignerProduct;
+import com.mozipp.product.test.designer.dto.PetShopDto;
+import com.mozipp.product.test.petshop.entity.PetShop;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DesignerProductConverter {
 
-    public static List<DesignerProductResponse> toDesignerProductResponse(List<DesignerProduct> designerProducts) {
-        List<DesignerProductResponse> designerProductResponses = new ArrayList<>();
+    public static List<DesignerProductListDto> toDesignerProductResponse(List<DesignerProduct> designerProducts) {
+        List<DesignerProductListDto> designerProductListDtos = new ArrayList<>();
         for(DesignerProduct designerProduct : designerProducts) {
-            DesignerProductResponse designerProductResponse = DesignerProductResponse.builder()
+            PetShop petShop = designerProduct.getDesigner().getPetShop();
+            PetShopDto petShopDto = PetShopDto.builder()
+                    .petShopName(petShop.getPetShopName())
+                    .address(petShop.getAddress())
+                    .addressDetail(petShop.getAddressDetail())
+                    .build();
+
+            DesignerProductListDto dto = DesignerProductListDto.builder()
                     .designerProductId(designerProduct.getId())
                     .title(designerProduct.getTitle())
-                    .description(designerProduct.getDescription())
+                    .introduction(designerProduct.getDescription())
                     .design(designerProduct.getDesign())
                     .modelPreferDescription(designerProduct.getModelPreferDescription())
                     .preferBreed(designerProduct.getPreferBreed())
                     .productStatus(designerProduct.getProductStatus())
+                    .petShop(petShopDto)
                     .createdAt(designerProduct.getCreatedAt())
                     .build();
-            designerProductResponses.add(designerProductResponse);
+            designerProductListDtos.add(dto);
         }
-        return designerProductResponses;
+        return designerProductListDtos;
     }
 
-    public static DesignerProduct toDesignerProductCreateDto(DesignerProductCreateDto request) {
+    public static DesignerProduct toDesignerProduct(DesignerProductCreateDto request) {
         return DesignerProduct.builder()
                 .title(request.getTitle())
                 .description(request.getIntroduction())

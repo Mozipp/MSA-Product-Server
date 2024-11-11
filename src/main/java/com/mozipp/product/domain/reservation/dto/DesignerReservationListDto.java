@@ -1,5 +1,6 @@
 package com.mozipp.product.domain.reservation.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mozipp.product.domain.reservation.entity.ReservationStatus;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -15,7 +16,9 @@ public class DesignerReservationListDto {
     private String design;
     private ReservationListModelDto model;
     private ReservationStatus reservationStatus;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime reservationDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
 
     @Builder
