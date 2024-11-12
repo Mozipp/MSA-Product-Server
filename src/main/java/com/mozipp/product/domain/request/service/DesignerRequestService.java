@@ -45,8 +45,6 @@ public class DesignerRequestService {
                 .build();
 
         reservationRepository.save(reservation);
-
-        reservationRequestRepository.save(request);
     }
 
     @Transactional
@@ -58,8 +56,6 @@ public class DesignerRequestService {
 
         DesignerProduct designerProduct = request.getDesignerProduct();
         designerProduct.updateProductStatus(ProductStatus.AVAILABLE);
-
-        reservationRequestRepository.save(request);
     }
 
     public List<DesignerRequestListDto> getReservationRequestList(User user) {
@@ -70,7 +66,7 @@ public class DesignerRequestService {
         for(ReservationRequest request : reservationRequests) {
             Long modelId = request.getModel().getId();
             List<ReviewDto> reviews = modelReviewService.getReviewsForModel(modelId);
-            DesignerRequestListDto dto = ReservationRequestConverter.toDesignerReservationRequestDto(request, reviews);
+            DesignerRequestListDto dto = ReservationRequestConverter.toDesignerRequestListDto(request, reviews);
             reservationRequestList.add(dto);
         }
 

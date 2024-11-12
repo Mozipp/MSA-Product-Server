@@ -32,7 +32,7 @@ public class ReservationRequest extends BaseTimeEntity {
     @JoinColumn(name = "model_id")
     private Model model;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "designer_product_id")
     private DesignerProduct designerProduct;
 
@@ -48,16 +48,11 @@ public class ReservationRequest extends BaseTimeEntity {
     }
 
     @Builder
-    public ReservationRequest(RequestStatus status, String modelDescription, LocalDateTime reservationRequestDate, Model model, DesignerProduct designerProduct, Reservation reservation) {
-        this.status = status;
+    public ReservationRequest(String modelDescription, LocalDateTime reservationRequestDate, Model model, DesignerProduct designerProduct) {
         this.modelDescription = modelDescription;
         this.reservationRequestDate = reservationRequestDate;
         this.model = model;
         this.designerProduct = designerProduct;
-        this.reservation = reservation;
-    }
-
-    public void associateReservation(Reservation reservation) {
-        this.reservation = reservation;
     }
 }
+

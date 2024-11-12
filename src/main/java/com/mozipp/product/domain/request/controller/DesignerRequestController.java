@@ -24,8 +24,8 @@ public class DesignerRequestController {
     @GetMapping
     public BaseResponse<List<DesignerRequestListDto>> getReservationRequestList(@AuthenticationPrincipal UserDetails userDetails) {
         User user = userFindService.findByUserDetails(userDetails);
-        List<DesignerRequestListDto> response = designerReservationRequestService.getReservationRequestList(user);
-        return BaseResponse.success(response);
+        List<DesignerRequestListDto> designerRequestListDtos = designerReservationRequestService.getReservationRequestList(user);
+        return BaseResponse.success(designerRequestListDtos);
     }
 
     // Designer 예약 요청 수락

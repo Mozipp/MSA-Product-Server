@@ -3,15 +3,19 @@ package com.mozipp.product.domain.reservation.service;
 import com.mozipp.product.domain.request.dto.ReviewDto;
 import com.mozipp.product.domain.request.entity.ReservationRequest;
 import com.mozipp.product.domain.reservation.converter.ReservationConverter;
+import com.mozipp.product.domain.reservation.dto.DesignerReservationHandleDto;
 import com.mozipp.product.domain.reservation.dto.DesignerReservationListDto;
 import com.mozipp.product.domain.reservation.entity.Reservation;
 import com.mozipp.product.domain.reservation.repository.ReservationRepository;
 import com.mozipp.product.domain.review.service.ModelReviewService;
+import com.mozipp.product.global.handler.BaseException;
+import com.mozipp.product.global.handler.response.BaseResponseStatus;
 import com.mozipp.product.test.designer.entity.Designer;
 import com.mozipp.product.test.model.entity.Model;
 import com.mozipp.product.test.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,5 +42,13 @@ public class DesignerReservationService {
         }
 
         return designerReservationListDtos;
+    }
+
+    @Transactional
+    public void handleReservation(DesignerReservationHandleDto request, User user, String reservationId) {
+        Reservation reservation = reservationRepository.findById(Long.parseLong(reservationId))
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_RESERVATION));
+
+        reservation.updateStatus(request.getReservationStatus());
     }
 }

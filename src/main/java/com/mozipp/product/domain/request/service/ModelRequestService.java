@@ -33,9 +33,8 @@ public class ModelRequestService {
         DesignerProduct designerProduct = designerProductRepository.findById(request.getDesignerProductId())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER_PRODUCT));
 
-        ReservationRequest reservationRequest = ReservationRequestConverter.toModelReservationRequestDto(model, designerProduct, request);
+        ReservationRequest reservationRequest = ReservationRequestConverter.toReservationRequest(model, designerProduct, request);
         reservationRequestRepository.save(reservationRequest);
-
         designerProduct.updateProductStatus(ProductStatus.RESERVED);
     }
 

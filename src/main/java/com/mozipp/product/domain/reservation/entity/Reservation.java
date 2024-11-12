@@ -24,7 +24,7 @@ public class Reservation {
 
     private LocalDateTime reservationDate;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_request_id")
     private ReservationRequest reservationRequest;
 
@@ -32,6 +32,9 @@ public class Reservation {
     public Reservation(LocalDateTime reservationDate, ReservationRequest reservationRequest) {
         this.reservationDate = reservationDate;
         this.reservationRequest = reservationRequest;
-        reservationRequest.associateReservation(this);
+    }
+
+    public void updateStatus(ReservationStatus status) {
+        this.status = status;
     }
 }
