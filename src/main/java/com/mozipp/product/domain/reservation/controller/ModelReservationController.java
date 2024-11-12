@@ -8,6 +8,7 @@ import com.mozipp.product.test.user.service.UserFindService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +23,7 @@ public class ModelReservationController {
     private final ModelReservationService modelReservationService;
 
     // Model 예약 확정 리스트 조회
+    @GetMapping
     public BaseResponse<List<ModelReservationListDto>> getModelReservationList(@AuthenticationPrincipal UserDetails userDetails){
         User user = userFindService.findByUserDetails(userDetails);
         return BaseResponse.success(modelReservationService.getModelReservationList(user));

@@ -2,6 +2,7 @@ package com.mozipp.product.domain.review.service;
 
 import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.product.repository.DesignerProductRepository;
+import com.mozipp.product.domain.request.dto.ReviewDto;
 import com.mozipp.product.domain.request.service.FindModelService;
 import com.mozipp.product.domain.review.converter.ReviewConverter;
 import com.mozipp.product.domain.review.dto.DesignerReviewCreateDto;
@@ -14,6 +15,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class DesignerReviewService {
@@ -21,6 +25,21 @@ public class DesignerReviewService {
     private final ReviewRepository reviewRepository;
     private final DesignerProductRepository designerProductRepository;
     private final FindModelService findModelService;
+
+    public List<ReviewDto> getReviewsForDesigner(Long designerId) {
+        List<Review> reviews = reviewRepository.findByTargetId(designerId);
+        List<ReviewDto> reviewDtos = new ArrayList<>();
+
+        for (Review review : reviews) {
+            ReviewDto reviewDto = ReviewDto.builder()
+                    .reviewId(review.getId())
+                    .reviewContent(review.getReviewContent())
+                    .build();
+            reviewDtos.add(reviewDto);
+        }
+
+        return reviewDtos;
+    }
 
     @Transactional
     public void createDesignerReview(DesignerReviewCreateDto request, User user) {
@@ -32,4 +51,5 @@ public class DesignerReviewService {
         Review review = ReviewConverter.toDesignerReview(request, user, designerProduct, modelId);
         reviewRepository.save(review);
     }
+
 }
