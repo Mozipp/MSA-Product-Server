@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/model/report")
+@RequestMapping("/api/products/model/report")
 public class ModelReportController {
 
     private final ModelReportService modelReportService;

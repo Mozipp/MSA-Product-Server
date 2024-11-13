@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/designer/report")
+@RequestMapping("/api/products/designer/report")
 public class DesignerReportController {
 
     private final DesignerReportService designerReportService;

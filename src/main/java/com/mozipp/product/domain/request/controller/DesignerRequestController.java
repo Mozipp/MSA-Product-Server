@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/designer/reservation-request")
+@RequestMapping("/api/products/designer/reservation-request")
 public class DesignerRequestController {
 
     private final DesignerRequestService designerReservationRequestService;

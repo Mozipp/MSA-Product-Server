@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/model/reservation-request")
+@RequestMapping("/api/products/model/reservation-request")
 public class ModelRequestController {
 
     private final ModelRequestService modelRequestService;

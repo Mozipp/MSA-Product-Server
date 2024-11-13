@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/designer/review")
+@RequestMapping("/api/products/designer/review")
 public class DesignerReviewController {
 
     private final UserFindService userFindService;
