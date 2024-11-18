@@ -13,7 +13,6 @@ import com.mozipp.product.domain.review.service.ModelReviewService;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
 import com.mozipp.product.test.designer.entity.Designer;
-import com.mozipp.product.test.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,8 +57,7 @@ public class DesignerRequestService {
         designerProduct.updateProductStatus(ProductStatus.AVAILABLE);
     }
 
-    public List<DesignerRequestListDto> getReservationRequestList(User user) {
-        Designer designer = (Designer) user;
+    public List<DesignerRequestListDto> getReservationRequestList(Designer designer) {
         List<ReservationRequest> reservationRequests = reservationRequestRepository.findByDesignerProduct_Designer_Id(designer.getId());
         List<DesignerRequestListDto> reservationRequestList = new ArrayList<>();
 

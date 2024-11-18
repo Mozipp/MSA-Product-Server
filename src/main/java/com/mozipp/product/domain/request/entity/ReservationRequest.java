@@ -19,7 +19,6 @@ public class ReservationRequest extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reservation_request_id")
     private Long id;
 
     @Enumerated(EnumType.STRING)

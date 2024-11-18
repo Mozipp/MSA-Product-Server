@@ -10,7 +10,7 @@ import com.mozipp.product.domain.review.entity.Review;
 import com.mozipp.product.domain.review.repository.ReviewRepository;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
-import com.mozipp.product.test.user.entity.User;
+import com.mozipp.product.test.designer.entity.Designer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +34,7 @@ public class DesignerReviewService {
             ReviewDto reviewDto = ReviewDto.builder()
                     .reviewId(review.getId())
                     .reviewContent(review.getReviewContent())
+                    .createdAt(review.getCreatedAt())
                     .build();
             reviewDtos.add(reviewDto);
         }
@@ -42,13 +43,13 @@ public class DesignerReviewService {
     }
 
     @Transactional
-    public void createDesignerReview(DesignerReviewCreateDto request, User user) {
+    public void createDesignerReview(DesignerReviewCreateDto request, Designer designer) {
         DesignerProduct designerProduct = designerProductRepository.findById(request.getDesignerProductId())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER_PRODUCT));
 
         Long modelId = findModelService.getDesignerProductIdForModel(request.getDesignerProductId());
 
-        Review review = ReviewConverter.toDesignerReview(request, user, designerProduct, modelId);
+        Review review = ReviewConverter.toDesignerReview(request, designer, designerProduct, modelId);
         reviewRepository.save(review);
     }
 

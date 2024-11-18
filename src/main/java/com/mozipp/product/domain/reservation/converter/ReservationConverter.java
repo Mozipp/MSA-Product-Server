@@ -7,9 +7,9 @@ import com.mozipp.product.domain.reservation.dto.DesignerReservationListDto;
 import com.mozipp.product.domain.reservation.dto.ModelReservationListDto;
 import com.mozipp.product.domain.reservation.dto.ReservationListModelDto;
 import com.mozipp.product.domain.reservation.entity.Reservation;
-import com.mozipp.product.test.designer.dto.PetShopDto;
 import com.mozipp.product.test.model.entity.Model;
 import com.mozipp.product.test.petshop.entity.PetShop;
+import com.mozipp.product.users.PetShopDto;
 
 import java.util.List;
 

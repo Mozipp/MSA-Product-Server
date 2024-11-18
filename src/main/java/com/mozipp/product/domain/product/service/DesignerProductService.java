@@ -10,12 +10,12 @@ import com.mozipp.product.domain.request.dto.ReviewDto;
 import com.mozipp.product.domain.review.service.DesignerReviewService;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
-import com.mozipp.product.test.designer.dto.PetShopDto;
 import com.mozipp.product.test.designer.entity.Designer;
+import com.mozipp.product.test.designer.repository.DesignerRepository;
 import com.mozipp.product.test.petgroomingimage.entity.PetGroomingImage;
 import com.mozipp.product.test.petgroomingimage.repository.PetGroomingImageRepository;
 import com.mozipp.product.test.petshop.entity.PetShop;
-import com.mozipp.product.test.user.entity.User;
+import com.mozipp.product.users.PetShopDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +29,7 @@ public class DesignerProductService {
     private final DesignerProductRepository designerProductRepository;
     private final DesignerReviewService designerReviewService;
     private final PetGroomingImageRepository petGroomingImageRepository;
+    private final DesignerRepository designerRepository;
 
     public List<DesignerProductListDto> getDesignerProducts() {
         List<DesignerProduct> designerProducts = designerProductRepository.findAll();
@@ -36,15 +37,16 @@ public class DesignerProductService {
     }
 
     @Transactional
-    public void createDesignerProduct(User user, DesignerProductCreateDto request) {
-        Designer designer = (Designer) user;
+    public void createDesignerProduct(DesignerProductCreateDto request) {
+        Designer designer = designerRepository.findById(request.getDesignerId())
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND));
+
         DesignerProduct designerProduct = DesignerProductConverter.toDesignerProduct(request);
-        designer.addProduct(designerProduct);
+        designerProduct.updateDesigner(designer);
         designerProductRepository.save(designerProduct);
     }
 
-    public List<DesignerProductListDto> getMyDesignerProducts(User user) {
-        Designer designer = (Designer) user;
+    public List<DesignerProductListDto> getMyDesignerProducts(Designer designer) {
         List<DesignerProduct> designerProducts = designerProductRepository.findByDesigner_Id(designer.getId());
         return DesignerProductConverter.toDesignerProductResponse(designerProducts);
     }

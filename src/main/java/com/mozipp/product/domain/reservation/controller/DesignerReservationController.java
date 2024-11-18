@@ -3,12 +3,12 @@ package com.mozipp.product.domain.reservation.controller;
 import com.mozipp.product.domain.reservation.dto.DesignerReservationHandleDto;
 import com.mozipp.product.domain.reservation.dto.DesignerReservationListDto;
 import com.mozipp.product.domain.reservation.service.DesignerReservationService;
+import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponse;
-import com.mozipp.product.test.user.entity.User;
-import com.mozipp.product.test.user.service.UserFindService;
+import com.mozipp.product.global.handler.response.BaseResponseStatus;
+import com.mozipp.product.test.designer.entity.Designer;
+import com.mozipp.product.test.designer.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,21 +18,21 @@ import java.util.List;
 @RequestMapping("/api/products/designer/reservation")
 public class DesignerReservationController {
 
-    private final UserFindService userFindService;
     private final DesignerReservationService designerReservationService;
+    private final DesignerRepository designerRepository;
 
     // Designer 예약 확정 리스트 조회
-    @GetMapping
-    public BaseResponse<List<DesignerReservationListDto>> getDesignerReservationList(@AuthenticationPrincipal UserDetails userDetails) {
-        User user =  userFindService.findByUserDetails(userDetails);
-        return BaseResponse.success(designerReservationService.getDesignerReservationList(user));
+    @GetMapping("/{designerId}")
+    public BaseResponse<List<DesignerReservationListDto>> getDesignerReservationList(@PathVariable Long designerId) {
+        Designer designer = designerRepository.findById(designerId)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND));
+        return BaseResponse.success(designerReservationService.getDesignerReservationList(designer));
     }
 
     // Designer 예약 확정 처리
     @PostMapping("/{reservationId}")
-    public BaseResponse<Object> handleReservation(@RequestBody DesignerReservationHandleDto request, @AuthenticationPrincipal UserDetails userDetails, @PathVariable String reservationId) {
-        User user = userFindService.findByUserDetails(userDetails);
-        designerReservationService.handleReservation(request, user, reservationId);
+    public BaseResponse<Object> handleReservation(@RequestBody DesignerReservationHandleDto request, @PathVariable Long reservationId) {
+        designerReservationService.handleReservation(request, reservationId);
         return BaseResponse.success();
     }
  }

@@ -2,7 +2,7 @@ package com.mozipp.product.domain.reservation.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mozipp.product.domain.reservation.entity.ReservationStatus;
-import com.mozipp.product.test.designer.dto.PetShopDto;
+import com.mozipp.product.users.PetShopDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

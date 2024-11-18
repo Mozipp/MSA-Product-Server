@@ -5,7 +5,6 @@ import com.mozipp.product.domain.reservation.dto.ModelReservationListDto;
 import com.mozipp.product.domain.reservation.entity.Reservation;
 import com.mozipp.product.domain.reservation.repository.ReservationRepository;
 import com.mozipp.product.test.model.entity.Model;
-import com.mozipp.product.test.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +17,8 @@ public class ModelReservationService {
 
     private final ReservationRepository reservationRepository;
 
-    public List<ModelReservationListDto> getModelReservationList(User user) {
-        Model model = (Model) user;
+    public List<ModelReservationListDto> getModelReservationList(Model model) {
+
         List<Reservation> reservations = reservationRepository.findAllByReservationRequest_Model(model);
         List<ModelReservationListDto> modelReservationListDtos = new ArrayList<>();
 

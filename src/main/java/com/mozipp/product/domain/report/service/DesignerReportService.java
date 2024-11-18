@@ -9,7 +9,7 @@ import com.mozipp.product.domain.report.repository.ReportRepository;
 import com.mozipp.product.domain.request.service.FindModelService;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
-import com.mozipp.product.test.user.entity.User;
+import com.mozipp.product.test.designer.entity.Designer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +21,13 @@ public class DesignerReportService {
     private final DesignerProductRepository designerProductRepository;
     private final FindModelService findModelService;
 
-    public void createDesignerReport(DesignerReportCreateDto request, User user) {
+    public void createDesignerReport(DesignerReportCreateDto request, Designer designer) {
         DesignerProduct designerProduct = designerProductRepository.findById(request.getDesignerProductId())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER_PRODUCT));
 
         Long modelId = findModelService.getDesignerProductIdForModel(request.getDesignerProductId());
 
-        Report report = ReportConverter.toDesignerReport(request, user, designerProduct, modelId);
+        Report report = ReportConverter.toDesignerReport(request, designer, designerProduct, modelId);
         reportRepository.save(report);
     }
 }

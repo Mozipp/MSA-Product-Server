@@ -8,7 +8,7 @@ import com.mozipp.product.domain.report.entity.Report;
 import com.mozipp.product.domain.report.repository.ReportRepository;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
-import com.mozipp.product.test.user.entity.User;
+import com.mozipp.product.test.model.entity.Model;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,10 +21,10 @@ public class ModelReportService {
     private final DesignerProductRepository designerProductRepository;
 
     @Transactional
-    public void createModelReport(ModelReportCreateDto request, User user) {
+    public void createModelReport(ModelReportCreateDto request, Model model) {
         DesignerProduct designerProduct = designerProductRepository.findById(request.getDesignerProductId())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER_PRODUCT));
-        Report report = ReportConverter.toModelReport(request, user, designerProduct);
+        Report report = ReportConverter.toModelReport(request, model, designerProduct);
         reportRepository.save(report);
     }
 }
