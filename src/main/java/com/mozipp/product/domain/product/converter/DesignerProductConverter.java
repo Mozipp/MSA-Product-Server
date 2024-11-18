@@ -4,11 +4,12 @@ import com.mozipp.product.domain.product.dto.DesignerProductCreateDto;
 import com.mozipp.product.domain.product.dto.DesignerProductListDto;
 import com.mozipp.product.domain.product.dto.DesignerProductProfileDto;
 import com.mozipp.product.domain.product.entity.DesignerProduct;
+import com.mozipp.product.domain.product.entity.ProductStatus;
 import com.mozipp.product.domain.request.dto.ReviewDto;
-import com.mozipp.product.test.designer.dto.PetShopDto;
-import com.mozipp.product.test.petgroomingimage.dto.PetGroomingImageDto;
 import com.mozipp.product.test.petgroomingimage.entity.PetGroomingImage;
 import com.mozipp.product.test.petshop.entity.PetShop;
+import com.mozipp.product.users.PetGroomingImageDto;
+import com.mozipp.product.users.PetShopDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,7 @@ public class DesignerProductConverter {
                 .design(request.getDesign())
                 .modelPreferDescription(request.getModelPreferDescription())
                 .preferBreed(request.getPreferBreed())
+                .productStatus(ProductStatus.AVAILABLE)
                 .build();
     }
 
@@ -66,7 +68,8 @@ public class DesignerProductConverter {
         return DesignerProductProfileDto.builder()
                 .name(designerProduct.getDesigner().getName())
                 .gender(designerProduct.getDesigner().getGender())
-                .petShopDto(petShopDto)
+                .career(designerProduct.getDesigner().getCareer())
+                .petShop(petShopDto)
                 .petGroomingImageUrl(petGroomingImageDtos)
                 .reviews(reviews)
                 .build();

@@ -40,7 +40,7 @@ public enum BaseResponseStatus {
      * 409 CONFLICT 중복된 리소스
      */
     CONFLICT(false, 409, HttpStatus.CONFLICT, "중복된 리소스 입력"),
-    DUPLICATE_ID(false, 40901, HttpStatus.CONFLICT, "중복된 아이디"),
+    CONFLICT_DUPLICATE_ID(false, 40901, HttpStatus.CONFLICT, "중복된 아이디"),
 
     /**
      * 500 INTERNAL_SERVER_ERROR 서버 내부 에러

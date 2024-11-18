@@ -12,7 +12,6 @@ import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
 import com.mozipp.product.test.designer.entity.Designer;
 import com.mozipp.product.test.model.entity.Model;
-import com.mozipp.product.test.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +26,8 @@ public class DesignerReservationService {
     private final ReservationRepository reservationRepository;
     private final ModelReviewService modelReviewService;
 
-    public List<DesignerReservationListDto> getDesignerReservationList(User user) {
-        Designer designer = (Designer) user;
+    public List<DesignerReservationListDto> getDesignerReservationList(Designer designer) {
+
         List<Reservation> reservations = reservationRepository.findAllByReservationRequest_DesignerProduct_Designer(designer);
         List<DesignerReservationListDto> designerReservationListDtos = new ArrayList<>();
 
@@ -45,8 +44,9 @@ public class DesignerReservationService {
     }
 
     @Transactional
-    public void handleReservation(DesignerReservationHandleDto request, User user, String reservationId) {
-        Reservation reservation = reservationRepository.findById(Long.parseLong(reservationId))
+    public void handleReservation(DesignerReservationHandleDto request, Long reservationId) {
+
+        Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_RESERVATION));
 
         reservation.updateStatus(request.getReservationStatus());

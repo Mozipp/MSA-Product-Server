@@ -16,6 +16,7 @@ public class ReservationRequestConverter {
                 .modelDescription(request.getModelDescription())
                 .petName(model.getPetName())
                 .petAge(model.getPetAge())
+                .petGender(model.getPetGender())
                 .breed(model.getBreed())
                 .petImageUrl(model.getPetImageUrl())
                 .reviews(reviews)

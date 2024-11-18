@@ -4,23 +4,24 @@ import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.review.dto.DesignerReviewCreateDto;
 import com.mozipp.product.domain.review.dto.ModelReviewCreateDto;
 import com.mozipp.product.domain.review.entity.Review;
-import com.mozipp.product.test.user.entity.User;
+import com.mozipp.product.test.designer.entity.Designer;
+import com.mozipp.product.test.model.entity.Model;
 
 public class ReviewConverter {
 
-    public static Review toDesignerReview(DesignerReviewCreateDto request, User user, DesignerProduct designerProduct, Long modelId) {
+    public static Review toDesignerReview(DesignerReviewCreateDto request, Designer designer, DesignerProduct designerProduct, Long modelId) {
         return Review.builder()
                 .reviewContent(request.getReviewContent())
-                .userId(user.getId())
+                .userId(designer.getId())
                 .targetId(modelId)
                 .designerProduct(designerProduct)
                 .build();
     }
 
-    public static Review toModelReview(ModelReviewCreateDto request, User user, DesignerProduct designerProduct) {
+    public static Review toModelReview(ModelReviewCreateDto request, Model model, DesignerProduct designerProduct) {
         return Review.builder()
                 .reviewContent(request.getReviewContent())
-                .userId(user.getId())
+                .userId(model.getId())
                 .targetId(designerProduct.getDesigner().getId())
                 .designerProduct(designerProduct)
                 .build();

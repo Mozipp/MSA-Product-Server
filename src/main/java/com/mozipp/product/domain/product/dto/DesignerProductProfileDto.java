@@ -1,9 +1,9 @@
 package com.mozipp.product.domain.product.dto;
 
 import com.mozipp.product.domain.request.dto.ReviewDto;
-import com.mozipp.product.test.designer.dto.PetShopDto;
-import com.mozipp.product.test.petgroomingimage.dto.PetGroomingImageDto;
-import com.mozipp.product.test.user.entity.Gender;
+import com.mozipp.product.test.model.entity.Gender;
+import com.mozipp.product.users.PetGroomingImageDto;
+import com.mozipp.product.users.PetShopDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,15 +16,17 @@ import java.util.List;
 public class DesignerProductProfileDto {
     private String name;
     private Gender gender;
-    private PetShopDto petShopDto;
+    private String career;
+    private PetShopDto petShop;
     private List<PetGroomingImageDto> petGroomingImageUrl;
     private List<ReviewDto> reviews;
 
     @Builder
-    public DesignerProductProfileDto(String name, Gender gender, PetShopDto petShopDto, List<PetGroomingImageDto> petGroomingImageUrl, List<ReviewDto> reviews) {
+    public DesignerProductProfileDto(String name, Gender gender, String career, PetShopDto petShop, List<PetGroomingImageDto> petGroomingImageUrl, List<ReviewDto> reviews) {
         this.name = name;
         this.gender = gender;
-        this.petShopDto = petShopDto;
+        this.career = career;
+        this.petShop = petShop;
         this.petGroomingImageUrl = petGroomingImageUrl;
         this.reviews = reviews;
     }

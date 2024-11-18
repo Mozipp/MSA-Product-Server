@@ -4,23 +4,24 @@ import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.report.dto.DesignerReportCreateDto;
 import com.mozipp.product.domain.report.dto.ModelReportCreateDto;
 import com.mozipp.product.domain.report.entity.Report;
-import com.mozipp.product.test.user.entity.User;
+import com.mozipp.product.test.designer.entity.Designer;
+import com.mozipp.product.test.model.entity.Model;
 
 public class ReportConverter {
 
-    public static Report toModelReport(ModelReportCreateDto request, User user, DesignerProduct designerProduct) {
+    public static Report toModelReport(ModelReportCreateDto request, Model model, DesignerProduct designerProduct) {
         return Report.builder()
                 .reportContent(request.getReportContent())
-                .userId(user.getId())
+                .userId(model.getId())
                 .targetId(designerProduct.getDesigner().getId())
                 .designerProduct(designerProduct)
                 .build();
     }
 
-    public static Report toDesignerReport(DesignerReportCreateDto request, User user, DesignerProduct designerProduct, Long modelId) {
+    public static Report toDesignerReport(DesignerReportCreateDto request, Designer designer, DesignerProduct designerProduct, Long modelId) {
         return Report.builder()
                 .reportContent(request.getReportContent())
-                .userId(user.getId())
+                .userId(designer.getId())
                 .targetId(modelId)
                 .designerProduct(designerProduct)
                 .build();

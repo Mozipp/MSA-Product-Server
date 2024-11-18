@@ -1,5 +1,6 @@
 package com.mozipp.product.domain.request.dto;
 
+import com.mozipp.product.test.model.entity.PetGender;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,13 +14,13 @@ public class ReservationRequestModelDto {
     private String modelDescription;
     private String petName;
     private String petAge;
-    private String petGender;
+    private PetGender petGender;
     private String breed;
     private String petImageUrl;
     private List<ReviewDto> reviews;
 
     @Builder
-    public ReservationRequestModelDto(String modelDescription, String petName, String petAge, String petGender, String breed, String petImageUrl, List<ReviewDto> reviews) {
+    public ReservationRequestModelDto(String modelDescription, String petName, String petAge, PetGender petGender, String breed, String petImageUrl, List<ReviewDto> reviews) {
         this.modelDescription = modelDescription;
         this.petName = petName;
         this.petAge = petAge;

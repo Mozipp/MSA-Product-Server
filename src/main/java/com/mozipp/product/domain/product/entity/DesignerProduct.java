@@ -21,7 +21,6 @@ public class DesignerProduct extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "designer_product_id")
     private Long id;
 
     private String title;
@@ -29,7 +28,8 @@ public class DesignerProduct extends BaseTimeEntity {
     private String design;
     private String modelPreferDescription;
     private String preferBreed;
-    private ProductStatus productStatus = ProductStatus.AVAILABLE;
+    @Enumerated(EnumType.STRING)
+    private ProductStatus productStatus;
 
     @OneToMany(mappedBy = "designerProduct")
     private List<Report> reports = new ArrayList<>();
@@ -45,16 +45,18 @@ public class DesignerProduct extends BaseTimeEntity {
     private Designer designer;
 
     @Builder
-    public DesignerProduct(String title, String description, String design, String modelPreferDescription, String preferBreed) {
+    public DesignerProduct(String title, String description, String design, String modelPreferDescription, String preferBreed, ProductStatus productStatus) {
         this.title = title;
         this.description = description;
         this.design = design;
         this.modelPreferDescription = modelPreferDescription;
         this.preferBreed = preferBreed;
+        this.productStatus = productStatus;
     }
 
     public void updateDesigner(Designer designer) {
         this.designer = designer;
+        designer.addDesignerProduct(this);
     }
 
     public void updateProductStatus(ProductStatus productStatus) {

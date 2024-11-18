@@ -2,12 +2,12 @@ package com.mozipp.product.domain.request.controller;
 
 import com.mozipp.product.domain.request.dto.DesignerRequestListDto;
 import com.mozipp.product.domain.request.service.DesignerRequestService;
+import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponse;
-import com.mozipp.product.test.user.entity.User;
-import com.mozipp.product.test.user.service.UserFindService;
+import com.mozipp.product.global.handler.response.BaseResponseStatus;
+import com.mozipp.product.test.designer.entity.Designer;
+import com.mozipp.product.test.designer.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,13 +18,14 @@ import java.util.List;
 public class DesignerRequestController {
 
     private final DesignerRequestService designerReservationRequestService;
-    private final UserFindService userFindService;
+    private final DesignerRepository designerRepository;
 
     // Designer 예약 요청 리스트 조회
-    @GetMapping
-    public BaseResponse<List<DesignerRequestListDto>> getReservationRequestList(@AuthenticationPrincipal UserDetails userDetails) {
-        User user = userFindService.findByUserDetails(userDetails);
-        List<DesignerRequestListDto> designerRequestListDtos = designerReservationRequestService.getReservationRequestList(user);
+    @GetMapping("/{designerId}")
+    public BaseResponse<List<DesignerRequestListDto>> getReservationRequestList(@PathVariable Long designerId) {
+        Designer designer = designerRepository.findById(designerId)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND));
+        List<DesignerRequestListDto> designerRequestListDtos = designerReservationRequestService.getReservationRequestList(designer);
         return BaseResponse.success(designerRequestListDtos);
     }
 
