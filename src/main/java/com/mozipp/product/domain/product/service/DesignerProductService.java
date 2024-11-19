@@ -33,13 +33,13 @@ public class DesignerProductService {
 
     public List<DesignerProductListDto> getDesignerProducts() {
         List<DesignerProduct> designerProducts = designerProductRepository.findAll();
-        return DesignerProductConverter.toDesignerProductResponse(designerProducts);
+        return DesignerProductConverter.toDesignerProductListDto(designerProducts);
     }
 
     @Transactional
     public void createDesignerProduct(DesignerProductCreateDto request) {
         Designer designer = designerRepository.findById(request.getDesignerId())
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND));
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
 
         DesignerProduct designerProduct = DesignerProductConverter.toDesignerProduct(request);
         designerProduct.updateDesigner(designer);
@@ -48,7 +48,7 @@ public class DesignerProductService {
 
     public List<DesignerProductListDto> getMyDesignerProducts(Designer designer) {
         List<DesignerProduct> designerProducts = designerProductRepository.findByDesigner_Id(designer.getId());
-        return DesignerProductConverter.toDesignerProductResponse(designerProducts);
+        return DesignerProductConverter.toDesignerProductListDto(designerProducts);
     }
 
     public DesignerProductProfileDto getModelToDesignerProfile(Long designerProductId) {

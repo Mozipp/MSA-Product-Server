@@ -25,16 +25,16 @@ public class ModelRequestController {
     @PostMapping
     public BaseResponse<Object> createModelReservationRequest(@RequestBody ModelRequestCreateDto request){
         Model model = modelRepository.findById(request.getModelId())
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND));
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_MODEL));
         modelRequestService.createModelReservationRequest(model, request);
         return BaseResponse.success();
     }
 
     // Model 예약 요청 리스트 조회
-    @GetMapping("{modelId}")
+    @GetMapping("/{modelId}")
     public BaseResponse<List<ModelRequestListDto>> getModelReservationRequest(@PathVariable Long modelId){
         Model model = modelRepository.findById(modelId)
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND));
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_MODEL));
         return BaseResponse.success(modelRequestService.getModelReservationRequest(model));
     }
 

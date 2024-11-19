@@ -1,18 +1,12 @@
 package com.mozipp.product.domain.product.entity;
 
 import com.mozipp.product.domain.BaseTimeEntity;
-import com.mozipp.product.domain.report.entity.Report;
-import com.mozipp.product.domain.request.entity.ReservationRequest;
-import com.mozipp.product.domain.review.entity.Review;
 import com.mozipp.product.test.designer.entity.Designer;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -30,15 +24,6 @@ public class DesignerProduct extends BaseTimeEntity {
     private String preferBreed;
     @Enumerated(EnumType.STRING)
     private ProductStatus productStatus;
-
-    @OneToMany(mappedBy = "designerProduct")
-    private List<Report> reports = new ArrayList<>();
-
-    @OneToMany(mappedBy = "designerProduct")
-    private List<Review> reviews = new ArrayList<>();
-
-    @OneToOne(mappedBy = "designerProduct")
-    private ReservationRequest reservationRequest;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "designer_id")

@@ -35,6 +35,10 @@ public enum BaseResponseStatus {
     NOT_FOUND_RESERVATION_REQUEST(false, 40401, HttpStatus.NOT_FOUND, "해당 Reservation Request를 찾을 수 없음"),
     NOT_FOUND_DESIGNER_PRODUCT(false, 40402, HttpStatus.NOT_FOUND, "해당 Designer Product를 찾을 수 없음"),
     NOT_FOUND_RESERVATION(false, 40403, HttpStatus.NOT_FOUND, "해당 Reservation을 찾을 수 없음"),
+    NOT_FOUND_MODEL(false, 40404, HttpStatus.NOT_FOUND, "해당 Model을 찾을 수 없음"),
+    NOT_FOUND_DESIGNER(false, 40405, HttpStatus.NOT_FOUND, "해당 Designer를 찾을 수 없음"),
+
+
 
     /**
      * 409 CONFLICT 중복된 리소스

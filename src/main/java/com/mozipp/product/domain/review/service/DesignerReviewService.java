@@ -2,8 +2,8 @@ package com.mozipp.product.domain.review.service;
 
 import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.product.repository.DesignerProductRepository;
+import com.mozipp.product.domain.product.service.UserFindService;
 import com.mozipp.product.domain.request.dto.ReviewDto;
-import com.mozipp.product.domain.request.service.FindModelService;
 import com.mozipp.product.domain.review.converter.ReviewConverter;
 import com.mozipp.product.domain.review.dto.DesignerReviewCreateDto;
 import com.mozipp.product.domain.review.entity.Review;
@@ -24,7 +24,7 @@ public class DesignerReviewService {
 
     private final ReviewRepository reviewRepository;
     private final DesignerProductRepository designerProductRepository;
-    private final FindModelService findModelService;
+    private final UserFindService userFindService;
 
     public List<ReviewDto> getReviewsForDesigner(Long designerId) {
         List<Review> reviews = reviewRepository.findByTargetId(designerId);
@@ -47,7 +47,7 @@ public class DesignerReviewService {
         DesignerProduct designerProduct = designerProductRepository.findById(request.getDesignerProductId())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER_PRODUCT));
 
-        Long modelId = findModelService.getDesignerProductIdForModel(request.getDesignerProductId());
+        Long modelId = userFindService.getModelId(request.getDesignerProductId());
 
         Review review = ReviewConverter.toDesignerReview(request, designer, designerProduct, modelId);
         reviewRepository.save(review);

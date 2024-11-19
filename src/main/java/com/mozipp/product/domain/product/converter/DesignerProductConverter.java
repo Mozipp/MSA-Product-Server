@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class DesignerProductConverter {
 
-    public static List<DesignerProductListDto> toDesignerProductResponse(List<DesignerProduct> designerProducts) {
+    public static List<DesignerProductListDto> toDesignerProductListDto(List<DesignerProduct> designerProducts) {
         List<DesignerProductListDto> designerProductListDtos = new ArrayList<>();
         for(DesignerProduct designerProduct : designerProducts) {
             PetShop petShop = designerProduct.getDesigner().getPetShop();

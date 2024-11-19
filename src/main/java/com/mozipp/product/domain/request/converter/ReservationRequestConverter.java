@@ -2,6 +2,7 @@ package com.mozipp.product.domain.request.converter;
 
 import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.request.dto.*;
+import com.mozipp.product.domain.request.entity.RequestStatus;
 import com.mozipp.product.domain.request.entity.ReservationRequest;
 import com.mozipp.product.test.model.entity.Model;
 
@@ -24,7 +25,7 @@ public class ReservationRequestConverter {
 
         return DesignerRequestListDto.builder()
                 .reservationRequestId(request.getId())
-                .reservationRequestStatus(request.getStatus())
+                .reservationRequestStatus(request.getRequestStatus())
                 .model(modelDto)
                 .reservationRequestDate(request.getReservationRequestDate())
                 .createdAt(request.getCreatedAt())
@@ -38,13 +39,14 @@ public class ReservationRequestConverter {
                 .designerProduct(designerProduct)
                 .modelDescription(request.getModelDescription())
                 .reservationRequestDate(request.getReservationRequestDate())
+                .requestStatus(RequestStatus.PENDING)
                 .build();
     }
 
     public static ModelRequestListDto toModelRequestListDto(ReservationRequest request) {
         return ModelRequestListDto.builder()
                 .reservationRequestId(request.getId())
-                .reservationRequestStatus(request.getStatus())
+                .reservationRequestStatus(request.getRequestStatus())
                 .modelDescription(request.getModelDescription())
                 .reservationRequestDate(request.getReservationRequestDate())
                 .createdAt(request.getCreatedAt())
