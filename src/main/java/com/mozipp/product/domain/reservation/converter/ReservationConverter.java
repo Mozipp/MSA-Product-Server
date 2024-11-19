@@ -30,7 +30,7 @@ public class ReservationConverter {
                 .reservationId(reservation.getId())
                 .petShop(petShopDto)
                 .design(designerProduct.getDesign())
-                .reservationStatus(reservation.getStatus())
+                .reservationStatus(reservation.getReservationStatus())
                 .reservationRequestDate(request.getReservationRequestDate())
                 .createdAt(request.getCreatedAt())
                 .build();
@@ -52,7 +52,7 @@ public class ReservationConverter {
                 .reservationId(reservation.getId())
                 .design(designerProduct.getDesign())
                 .model(modelDto)
-                .reservationStatus(reservation.getStatus())
+                .reservationStatus(reservation.getReservationStatus())
                 .reservationDate(reservation.getReservationDate())
                 .createdAt(request.getCreatedAt())
                 .build();

@@ -24,9 +24,9 @@ public class DesignerRequestController {
     @GetMapping("/{designerId}")
     public BaseResponse<List<DesignerRequestListDto>> getReservationRequestList(@PathVariable Long designerId) {
         Designer designer = designerRepository.findById(designerId)
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND));
-        List<DesignerRequestListDto> designerRequestListDtos = designerReservationRequestService.getReservationRequestList(designer);
-        return BaseResponse.success(designerRequestListDtos);
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
+        List<DesignerRequestListDto> designerRequestList = designerReservationRequestService.getReservationRequestList(designer);
+        return BaseResponse.success(designerRequestList);
     }
 
     // Designer 예약 요청 수락

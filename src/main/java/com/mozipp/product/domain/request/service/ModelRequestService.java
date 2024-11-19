@@ -31,20 +31,20 @@ public class ModelRequestService {
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER_PRODUCT));
 
         ReservationRequest reservationRequest = ReservationRequestConverter.toReservationRequest(model, designerProduct, request);
+        designerProduct.updateProductStatus(ProductStatus.UNAVAILABLE);
         reservationRequestRepository.save(reservationRequest);
-        designerProduct.updateProductStatus(ProductStatus.RESERVED);
     }
 
     public List<ModelRequestListDto> getModelReservationRequest(Model model) {
 
         List<ReservationRequest> reservationRequests = reservationRequestRepository.findAllByModel_Id(model.getId());
-        List<ModelRequestListDto> modelRequestListDtos = new ArrayList<>();
+        List<ModelRequestListDto> modelRequestList = new ArrayList<>();
 
         for (ReservationRequest request : reservationRequests) {
             ModelRequestListDto dto = ReservationRequestConverter.toModelRequestListDto(request);
-            modelRequestListDtos.add(dto);
+            modelRequestList.add(dto);
         }
 
-        return modelRequestListDtos;
+        return modelRequestList;
     }
 }

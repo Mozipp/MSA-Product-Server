@@ -25,7 +25,8 @@ public class DesignerProductController {
     // Designer 상품 페이지 목록 조회
     @GetMapping
     public BaseResponse<List<DesignerProductListDto>> getDesignerProducts() {
-        return BaseResponse.success(designerProductService.getDesignerProducts());
+        List<DesignerProductListDto> designerProducts = designerProductService.getDesignerProducts();
+        return BaseResponse.success(designerProducts);
     }
 
     // Designer 상품 등록
@@ -40,7 +41,9 @@ public class DesignerProductController {
     public BaseResponse<List<DesignerProductListDto>> getMyDesignerProducts(@PathVariable Long designerId){
         Designer designer = designerRepository.findById(designerId)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND));
-        return BaseResponse.success(designerProductService.getMyDesignerProducts(designer));
+
+        List<DesignerProductListDto> myDesignerProducts = designerProductService.getMyDesignerProducts(designer);
+        return BaseResponse.success(myDesignerProducts);
     }
 
     // Model -> Designer 프로필 조회

@@ -5,9 +5,11 @@ import com.mozipp.product.domain.product.entity.ProductStatus;
 import com.mozipp.product.domain.request.converter.ReservationRequestConverter;
 import com.mozipp.product.domain.request.dto.DesignerRequestListDto;
 import com.mozipp.product.domain.request.dto.ReviewDto;
+import com.mozipp.product.domain.request.entity.RequestStatus;
 import com.mozipp.product.domain.request.entity.ReservationRequest;
 import com.mozipp.product.domain.request.repository.ReservationRequestRepository;
 import com.mozipp.product.domain.reservation.entity.Reservation;
+import com.mozipp.product.domain.reservation.entity.ReservationStatus;
 import com.mozipp.product.domain.reservation.repository.ReservationRepository;
 import com.mozipp.product.domain.review.service.ModelReviewService;
 import com.mozipp.product.global.handler.BaseException;
@@ -33,14 +35,15 @@ public class DesignerRequestService {
         ReservationRequest request = reservationRequestRepository.findById(reservationRequestId)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_RESERVATION_REQUEST));
 
-        request.accept();
+        request.updateRequestStatus(RequestStatus.ACCEPTED);
 
         DesignerProduct designerProduct = request.getDesignerProduct();
-        designerProduct.updateProductStatus(ProductStatus.RESERVED);
+        designerProduct.updateProductStatus(ProductStatus.UNAVAILABLE);
 
         Reservation reservation = Reservation.builder()
                 .reservationDate(request.getReservationRequestDate())
                 .reservationRequest(request)
+                .reservationStatus(ReservationStatus.CONFIRMED)
                 .build();
 
         reservationRepository.save(reservation);
@@ -51,7 +54,7 @@ public class DesignerRequestService {
         ReservationRequest request = reservationRequestRepository.findById(reservationRequestId)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_RESERVATION_REQUEST));
 
-        request.reject();
+        request.updateRequestStatus(RequestStatus.REJECTED);
 
         DesignerProduct designerProduct = request.getDesignerProduct();
         designerProduct.updateProductStatus(ProductStatus.AVAILABLE);

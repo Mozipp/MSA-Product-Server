@@ -19,7 +19,7 @@ public class Reservation {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private ReservationStatus status = ReservationStatus.CONFIRMED;
+    private ReservationStatus reservationStatus;
 
     private LocalDateTime reservationDate;
 
@@ -28,12 +28,13 @@ public class Reservation {
     private ReservationRequest reservationRequest;
 
     @Builder
-    public Reservation(LocalDateTime reservationDate, ReservationRequest reservationRequest) {
+    public Reservation(LocalDateTime reservationDate, ReservationRequest reservationRequest, ReservationStatus reservationStatus) {
         this.reservationDate = reservationDate;
         this.reservationRequest = reservationRequest;
+        this.reservationStatus = reservationStatus;
     }
 
-    public void updateStatus(ReservationStatus status) {
-        this.status = status;
+    public void updateStatus(ReservationStatus reservationStatus) {
+        this.reservationStatus = reservationStatus;
     }
 }
