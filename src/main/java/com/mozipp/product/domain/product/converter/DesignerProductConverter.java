@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class DesignerProductConverter {
 
     public static List<DesignerProductListDto> toDesignerProductListDto(List<DesignerProduct> designerProducts) {
-        List<DesignerProductListDto> designerProductListDtos = new ArrayList<>();
+        List<DesignerProductListDto> productListDtos = new ArrayList<>();
         for(DesignerProduct designerProduct : designerProducts) {
             PetShop petShop = designerProduct.getDesigner().getPetShop();
             PetShopDto petShopDto = PetShopDto.builder()
@@ -27,7 +27,7 @@ public class DesignerProductConverter {
                     .addressDetail(petShop.getAddressDetail())
                     .build();
 
-            DesignerProductListDto dto = DesignerProductListDto.builder()
+            DesignerProductListDto productListDto = DesignerProductListDto.builder()
                     .designerProductId(designerProduct.getId())
                     .title(designerProduct.getTitle())
                     .introduction(designerProduct.getDescription())
@@ -38,9 +38,9 @@ public class DesignerProductConverter {
                     .petShop(petShopDto)
                     .createdAt(designerProduct.getCreatedAt())
                     .build();
-            designerProductListDtos.add(dto);
+            productListDtos.add(productListDto);
         }
-        return designerProductListDtos;
+        return productListDtos;
     }
 
     public static DesignerProduct toDesignerProduct(DesignerProductCreateDto request) {
@@ -72,6 +72,14 @@ public class DesignerProductConverter {
                 .petShop(petShopDto)
                 .petGroomingImageUrl(petGroomingImageDtos)
                 .reviews(reviews)
+                .build();
+    }
+
+    public static PetShopDto toPetShopDto(PetShop petShop) {
+        return PetShopDto.builder()
+                .petShopName(petShop.getPetShopName())
+                .address(petShop.getAddress())
+                .addressDetail(petShop.getAddressDetail())
                 .build();
     }
 }
