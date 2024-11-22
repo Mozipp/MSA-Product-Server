@@ -5,6 +5,7 @@ import com.mozipp.product.domain.product.dto.DesignerProductCreateDto;
 import com.mozipp.product.domain.product.dto.DesignerProductListDto;
 import com.mozipp.product.domain.product.dto.DesignerProductProfileDto;
 import com.mozipp.product.domain.product.entity.DesignerProduct;
+import com.mozipp.product.domain.product.entity.ProductStatus;
 import com.mozipp.product.domain.product.repository.DesignerProductRepository;
 import com.mozipp.product.domain.request.dto.ReviewDto;
 import com.mozipp.product.domain.review.service.DesignerReviewService;
@@ -29,8 +30,8 @@ public class DesignerProductService {
     private final DesignerReviewService designerReviewService;
     private final DesignerRepository designerRepository;
 
-    public List<DesignerProductListDto> getDesignerProducts() {
-        List<DesignerProduct> designerProducts = designerProductRepository.findAll();
+    public List<DesignerProductListDto> getDesignerProducts(ProductStatus status) {
+        List<DesignerProduct> designerProducts = designerProductRepository.findByProductStatus(status);
         return DesignerProductConverter.toDesignerProductListDto(designerProducts);
     }
 

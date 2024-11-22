@@ -3,6 +3,7 @@ package com.mozipp.product.domain.product.controller;
 import com.mozipp.product.domain.product.dto.DesignerProductCreateDto;
 import com.mozipp.product.domain.product.dto.DesignerProductListDto;
 import com.mozipp.product.domain.product.dto.DesignerProductProfileDto;
+import com.mozipp.product.domain.product.entity.ProductStatus;
 import com.mozipp.product.domain.product.service.DesignerProductService;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponse;
@@ -24,8 +25,8 @@ public class DesignerProductController {
 
     // Designer 상품 페이지 목록 조회
     @GetMapping
-    public BaseResponse<List<DesignerProductListDto>> getDesignerProducts() {
-        List<DesignerProductListDto> designerProducts = designerProductService.getDesignerProducts();
+    public BaseResponse<List<DesignerProductListDto>> getDesignerProducts(@RequestParam("status") ProductStatus status) {
+        List<DesignerProductListDto> designerProducts = designerProductService.getDesignerProducts(status);
         return BaseResponse.success(designerProducts);
     }
 
