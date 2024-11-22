@@ -8,5 +8,4 @@ import java.util.List;
 
 @Repository
 public interface DesignerProductRepository extends JpaRepository<DesignerProduct, Long> {
-    List<DesignerProduct> findByDesigner_Id(Long designerId);
 }
