@@ -45,9 +45,9 @@ public class DesignerProductService {
         designerProductRepository.save(designerProduct);
     }
 
-    public List<DesignerProductListDto> getMyDesignerProducts(Designer designer) {
-        List<DesignerProduct> designerProducts = designer.getProducts();
-        return DesignerProductConverter.toDesignerProductListDto(designerProducts);
+    public List<DesignerProductListDto> getMyDesignerProducts(Designer designer, ProductStatus status) {
+        List<DesignerProduct> myDesignerProducts = designerProductRepository.findByDesignerAndProductStatus(designer, status);
+        return DesignerProductConverter.toDesignerProductListDto(myDesignerProducts);
     }
 
     public DesignerProductProfileDto getModelToDesignerProfile(Long designerProductId) {
