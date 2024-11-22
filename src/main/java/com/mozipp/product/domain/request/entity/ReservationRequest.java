@@ -2,7 +2,7 @@ package com.mozipp.product.domain.request.entity;
 
 import com.mozipp.product.domain.BaseTimeEntity;
 import com.mozipp.product.domain.product.entity.DesignerProduct;
-import com.mozipp.product.test.model.entity.Model;
+import com.mozipp.product.users.Model;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

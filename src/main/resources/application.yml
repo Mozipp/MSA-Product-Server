@@ -3,10 +3,10 @@ spring:
     console:
       enabled: true
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/~/product
-    username: sa
-    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://test.crgyiukce4t8.ap-northeast-2.rds.amazonaws.com/test
+    username: admin
+    password: 1q2w3e4r!
   jpa:
     hibernate:
       ddl-auto: create

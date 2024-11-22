@@ -7,8 +7,8 @@ import com.mozipp.product.domain.product.service.DesignerProductService;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponse;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
-import com.mozipp.product.test.designer.entity.Designer;
-import com.mozipp.product.test.designer.repository.DesignerRepository;
+import com.mozipp.product.users.Designer;
+import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +40,7 @@ public class DesignerProductController {
     @GetMapping("/my-product/{designerId}")
     public BaseResponse<List<DesignerProductListDto>> getMyDesignerProducts(@PathVariable Long designerId){
         Designer designer = designerRepository.findById(designerId)
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND));
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
 
         List<DesignerProductListDto> myDesignerProducts = designerProductService.getMyDesignerProducts(designer);
         return BaseResponse.success(myDesignerProducts);

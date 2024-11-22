@@ -5,8 +5,8 @@ import com.mozipp.product.domain.reservation.service.ModelReservationService;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponse;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
-import com.mozipp.product.test.model.entity.Model;
-import com.mozipp.product.test.model.repository.ModelRepository;
+import com.mozipp.product.users.Model;
+import com.mozipp.product.users.repository.ModelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +27,7 @@ public class ModelReservationController {
     @GetMapping("/{modelId}")
     public BaseResponse<List<ModelReservationListDto>> getModelReservationList(@PathVariable Long modelId) {
         Model model = modelRepository.findById(modelId)
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND));
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_MODEL));
         return BaseResponse.success(modelReservationService.getModelReservationList(model));
     }
 }

@@ -6,8 +6,8 @@ import com.mozipp.product.domain.reservation.service.DesignerReservationService;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponse;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
-import com.mozipp.product.test.designer.entity.Designer;
-import com.mozipp.product.test.designer.repository.DesignerRepository;
+import com.mozipp.product.users.Designer;
+import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +25,7 @@ public class DesignerReservationController {
     @GetMapping("/{designerId}")
     public BaseResponse<List<DesignerReservationListDto>> getDesignerReservationList(@PathVariable Long designerId) {
         Designer designer = designerRepository.findById(designerId)
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND));
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
         return BaseResponse.success(designerReservationService.getDesignerReservationList(designer));
     }
 
