@@ -2,8 +2,8 @@ package com.mozipp.product.domain.reservation.repository;
 
 
 import com.mozipp.product.domain.reservation.entity.Reservation;
-import com.mozipp.product.test.model.entity.Model;
-import com.mozipp.product.test.user.entity.User;
+import com.mozipp.product.users.Model;
+import com.mozipp.product.users.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

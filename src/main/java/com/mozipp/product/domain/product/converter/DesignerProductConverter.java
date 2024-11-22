@@ -6,9 +6,9 @@ import com.mozipp.product.domain.product.dto.DesignerProductProfileDto;
 import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.product.entity.ProductStatus;
 import com.mozipp.product.domain.request.dto.ReviewDto;
-import com.mozipp.product.test.petgroomingimage.entity.PetGroomingImage;
-import com.mozipp.product.test.petshop.entity.PetShop;
+import com.mozipp.product.users.PetGroomingImage;
 import com.mozipp.product.users.PetGroomingImageDto;
+import com.mozipp.product.users.PetShop;
 import com.mozipp.product.users.PetShopDto;
 
 import java.util.ArrayList;

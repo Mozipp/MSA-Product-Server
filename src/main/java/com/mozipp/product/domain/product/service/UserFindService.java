@@ -4,7 +4,7 @@ import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.request.entity.RequestStatus;
 import com.mozipp.product.domain.request.entity.ReservationRequest;
 import com.mozipp.product.domain.request.repository.ReservationRequestRepository;
-import com.mozipp.product.test.designer.entity.Designer;
+import com.mozipp.product.users.Designer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

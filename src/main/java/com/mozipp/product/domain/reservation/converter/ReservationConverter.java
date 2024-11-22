@@ -7,8 +7,8 @@ import com.mozipp.product.domain.reservation.dto.DesignerReservationListDto;
 import com.mozipp.product.domain.reservation.dto.ModelReservationListDto;
 import com.mozipp.product.domain.reservation.dto.ReservationListModelDto;
 import com.mozipp.product.domain.reservation.entity.Reservation;
-import com.mozipp.product.test.model.entity.Model;
-import com.mozipp.product.test.petshop.entity.PetShop;
+import com.mozipp.product.users.PetShop;
+import com.mozipp.product.users.Model;
 import com.mozipp.product.users.PetShopDto;
 
 import java.util.List;
@@ -43,6 +43,9 @@ public class ReservationConverter {
 
         ReservationListModelDto modelDto = ReservationListModelDto.builder()
                 .modelDescription(request.getModelDescription())
+                .petName(model.getPetName())
+                .petAge(model.getPetAge())
+                .petGender(model.getPetGender())
                 .breed(model.getBreed())
                 .petImageUrl(model.getPetImageUrl())
                 .reviews(reviews)

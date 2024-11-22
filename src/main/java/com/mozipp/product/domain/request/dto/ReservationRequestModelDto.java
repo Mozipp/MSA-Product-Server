@@ -1,6 +1,6 @@
 package com.mozipp.product.domain.request.dto;
 
-import com.mozipp.product.test.model.entity.PetGender;
+import com.mozipp.product.users.PetGender;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

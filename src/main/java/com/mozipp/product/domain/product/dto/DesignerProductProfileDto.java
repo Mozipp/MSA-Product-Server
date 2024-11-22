@@ -1,7 +1,7 @@
 package com.mozipp.product.domain.product.dto;
 
 import com.mozipp.product.domain.request.dto.ReviewDto;
-import com.mozipp.product.test.model.entity.Gender;
+import com.mozipp.product.users.Gender;
 import com.mozipp.product.users.PetGroomingImageDto;
 import com.mozipp.product.users.PetShopDto;
 import lombok.AccessLevel;

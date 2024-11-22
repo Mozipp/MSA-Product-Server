@@ -4,7 +4,7 @@ import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.request.dto.*;
 import com.mozipp.product.domain.request.entity.RequestStatus;
 import com.mozipp.product.domain.request.entity.ReservationRequest;
-import com.mozipp.product.test.model.entity.Model;
+import com.mozipp.product.users.Model;
 
 import java.util.List;
 

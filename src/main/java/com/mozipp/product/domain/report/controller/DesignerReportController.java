@@ -5,8 +5,8 @@ import com.mozipp.product.domain.report.service.DesignerReportService;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponse;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
-import com.mozipp.product.test.designer.entity.Designer;
-import com.mozipp.product.test.designer.repository.DesignerRepository;
+import com.mozipp.product.users.Designer;
+import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +25,7 @@ public class DesignerReportController {
     @PostMapping
     public BaseResponse<Object> createDesignerReport(@RequestBody DesignerReportCreateDto request) {
         Designer designer = designerRepository.findById(request.getDesignerId())
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND));
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
         designerReportService.createDesignerReport(request, designer);
         return BaseResponse.success();
     }
