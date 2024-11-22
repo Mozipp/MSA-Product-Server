@@ -15,7 +15,6 @@ import com.mozipp.product.users.Designer;
 import com.mozipp.product.users.PetGroomingImage;
 import com.mozipp.product.users.PetShopDto;
 import com.mozipp.product.users.repository.DesignerRepository;
-import com.mozipp.product.users.repository.PetGroomingImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +28,6 @@ public class DesignerProductService {
     private final DesignerProductRepository designerProductRepository;
     private final DesignerReviewService designerReviewService;
     private final DesignerRepository designerRepository;
-    private final PetGroomingImageRepository petGroomingImageRepository;
 
     public List<DesignerProductListDto> getDesignerProducts() {
         List<DesignerProduct> designerProducts = designerProductRepository.findAll();

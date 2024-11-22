@@ -26,9 +26,7 @@ public class DesignerReportService {
     public void createDesignerReport(DesignerReportCreateDto request, Designer designer) {
         DesignerProduct designerProduct = designerProductRepository.findById(request.getDesignerProductId())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER_PRODUCT));
-
         Long modelId = userFindService.getModelId(request.getDesignerProductId());
-
         Report report = ReportConverter.toDesignerReport(request, designer, designerProduct, modelId);
         reportRepository.save(report);
     }
