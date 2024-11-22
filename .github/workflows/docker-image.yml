@@ -35,9 +35,9 @@ jobs:
         run: |
           TAG=${{ github.sha }}
           DOCKER_BUILDKIT=1 docker build --platform linux/amd64 \
-            --build-arg S3_ACCESS_KEY="${{ secrets.S3_ACCESS_KEY }}" \
-            --build-arg S3_SECRET_KEY="${{ secrets.S3_SECRET_KEY }}" \
-            --build-arg S3_BUCKET="${{ secrets.S3_BUCKET }}" \
+#            --build-arg S3_ACCESS_KEY="${{ secrets.S3_ACCESS_KEY }}" \
+#            --build-arg S3_SECRET_KEY="${{ secrets.S3_SECRET_KEY }}" \
+#            --build-arg S3_BUCKET="${{ secrets.S3_BUCKET }}" \
             -t 891377255417.dkr.ecr.ap-northeast-2.amazonaws.com/mozip-product:$TAG .
 
       # 5. ECR에 Docker 이미지 푸시
