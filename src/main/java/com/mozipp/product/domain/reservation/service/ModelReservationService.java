@@ -4,7 +4,7 @@ import com.mozipp.product.domain.reservation.converter.ReservationConverter;
 import com.mozipp.product.domain.reservation.dto.ModelReservationListDto;
 import com.mozipp.product.domain.reservation.entity.Reservation;
 import com.mozipp.product.domain.reservation.repository.ReservationRepository;
-import com.mozipp.product.test.model.entity.Model;
+import com.mozipp.product.users.Model;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

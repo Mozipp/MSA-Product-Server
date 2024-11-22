@@ -10,7 +10,7 @@ import com.mozipp.product.domain.request.entity.ReservationRequest;
 import com.mozipp.product.domain.request.repository.ReservationRequestRepository;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
-import com.mozipp.product.test.model.entity.Model;
+import com.mozipp.product.users.Model;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +37,7 @@ public class ModelRequestService {
 
     public List<ModelRequestListDto> getModelReservationRequest(Model model) {
 
-        List<ReservationRequest> reservationRequests = reservationRequestRepository.findAllByModel_Id(model.getId());
+        List<ReservationRequest> reservationRequests = model.getReservationRequests();
         List<ModelRequestListDto> modelRequestList = new ArrayList<>();
 
         for (ReservationRequest request : reservationRequests) {

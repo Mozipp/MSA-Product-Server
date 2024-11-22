@@ -10,12 +10,11 @@ import com.mozipp.product.domain.request.dto.ReviewDto;
 import com.mozipp.product.domain.review.service.DesignerReviewService;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
-import com.mozipp.product.test.designer.entity.Designer;
-import com.mozipp.product.test.designer.repository.DesignerRepository;
-import com.mozipp.product.test.petgroomingimage.entity.PetGroomingImage;
-import com.mozipp.product.test.petgroomingimage.repository.PetGroomingImageRepository;
-import com.mozipp.product.test.petshop.entity.PetShop;
+import com.mozipp.product.users.PetShop;
+import com.mozipp.product.users.Designer;
+import com.mozipp.product.users.PetGroomingImage;
 import com.mozipp.product.users.PetShopDto;
+import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +27,6 @@ public class DesignerProductService {
 
     private final DesignerProductRepository designerProductRepository;
     private final DesignerReviewService designerReviewService;
-    private final PetGroomingImageRepository petGroomingImageRepository;
     private final DesignerRepository designerRepository;
 
     public List<DesignerProductListDto> getDesignerProducts() {
@@ -47,7 +45,7 @@ public class DesignerProductService {
     }
 
     public List<DesignerProductListDto> getMyDesignerProducts(Designer designer) {
-        List<DesignerProduct> designerProducts = designerProductRepository.findByDesigner_Id(designer.getId());
+        List<DesignerProduct> designerProducts = designer.getProducts();
         return DesignerProductConverter.toDesignerProductListDto(designerProducts);
     }
 
@@ -64,7 +62,7 @@ public class DesignerProductService {
                 .addressDetail(petShop.getAddressDetail())
                 .build();
 
-        List<PetGroomingImage> petGroomingImages = petGroomingImageRepository.findByDesigner_Id(designer.getId());
+        List<PetGroomingImage> petGroomingImages = designer.getPetGroomingImages();
         List<ReviewDto> reviews = designerReviewService.getReviewsForDesigner(designer.getId());
 
         return DesignerProductConverter.toDesignerProductProfileDto(
