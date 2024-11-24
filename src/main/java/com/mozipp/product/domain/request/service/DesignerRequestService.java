@@ -60,8 +60,8 @@ public class DesignerRequestService {
         designerProduct.updateProductStatus(ProductStatus.AVAILABLE);
     }
 
-    public List<DesignerRequestListDto> getReservationRequestList(Designer designer) {
-        List<ReservationRequest> reservationRequests = reservationRequestRepository.findByDesignerProduct_Designer_Id(designer.getId());
+    public List<DesignerRequestListDto> getReservationRequestList(Designer designer, RequestStatus status) {
+        List<ReservationRequest> reservationRequests = reservationRequestRepository.findByDesignerProduct_Designer_IdAndRequestStatus(designer.getId(), status);
         List<DesignerRequestListDto> reservationRequestList = new ArrayList<>();
 
         for(ReservationRequest request : reservationRequests) {

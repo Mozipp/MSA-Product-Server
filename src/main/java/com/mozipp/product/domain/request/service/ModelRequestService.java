@@ -6,6 +6,7 @@ import com.mozipp.product.domain.product.repository.DesignerProductRepository;
 import com.mozipp.product.domain.request.converter.ReservationRequestConverter;
 import com.mozipp.product.domain.request.dto.ModelRequestCreateDto;
 import com.mozipp.product.domain.request.dto.ModelRequestListDto;
+import com.mozipp.product.domain.request.entity.RequestStatus;
 import com.mozipp.product.domain.request.entity.ReservationRequest;
 import com.mozipp.product.domain.request.repository.ReservationRequestRepository;
 import com.mozipp.product.global.handler.BaseException;
@@ -35,14 +36,16 @@ public class ModelRequestService {
         reservationRequestRepository.save(reservationRequest);
     }
 
-    public List<ModelRequestListDto> getModelReservationRequest(Model model) {
+    public List<ModelRequestListDto> getModelReservationRequest(Model model, RequestStatus status) {
 
         List<ReservationRequest> reservationRequests = model.getReservationRequests();
         List<ModelRequestListDto> modelRequestList = new ArrayList<>();
 
         for (ReservationRequest request : reservationRequests) {
-            ModelRequestListDto dto = ReservationRequestConverter.toModelRequestListDto(request);
-            modelRequestList.add(dto);
+            if(request.getRequestStatus() == status) {
+                ModelRequestListDto dto = ReservationRequestConverter.toModelRequestListDto(request);
+                modelRequestList.add(dto);
+            }
         }
 
         return modelRequestList;

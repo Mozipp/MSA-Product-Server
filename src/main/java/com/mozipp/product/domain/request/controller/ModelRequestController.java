@@ -1,7 +1,9 @@
 package com.mozipp.product.domain.request.controller;
 
+import com.mozipp.product.domain.request.dto.DesignerRequestListDto;
 import com.mozipp.product.domain.request.dto.ModelRequestCreateDto;
 import com.mozipp.product.domain.request.dto.ModelRequestListDto;
+import com.mozipp.product.domain.request.entity.RequestStatus;
 import com.mozipp.product.domain.request.service.ModelRequestService;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponse;
@@ -32,10 +34,10 @@ public class ModelRequestController {
 
     // Model 예약 요청 리스트 조회
     @GetMapping("/{modelId}")
-    public BaseResponse<List<ModelRequestListDto>> getModelReservationRequest(@PathVariable Long modelId){
+    public BaseResponse<List<ModelRequestListDto>> getModelReservationRequest(@PathVariable Long modelId, @RequestParam("status") RequestStatus status) {
         Model model = modelRepository.findById(modelId)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_MODEL));
-        return BaseResponse.success(modelRequestService.getModelReservationRequest(model));
+        return BaseResponse.success(modelRequestService.getModelReservationRequest(model, status));
     }
 
 }
