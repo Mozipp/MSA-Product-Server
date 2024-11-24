@@ -1,5 +1,6 @@
 package com.mozipp.product.domain.review.controller;
 
+import com.mozipp.product.domain.product.service.UserFindService;
 import com.mozipp.product.domain.review.dto.DesignerReviewCreateDto;
 import com.mozipp.product.domain.review.service.DesignerReviewService;
 import com.mozipp.product.global.handler.BaseException;
@@ -8,10 +9,7 @@ import com.mozipp.product.global.handler.response.BaseResponseStatus;
 import com.mozipp.product.users.Designer;
 import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,14 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class DesignerReviewController {
 
     private final DesignerReviewService designerReviewService;
-    private final DesignerRepository designerRepository;
+    private final UserFindService userFindService;
 
     // Designer 리뷰 등록
     @PostMapping
-    public BaseResponse<Object> createDesignerReview(@RequestBody DesignerReviewCreateDto request){
-        Designer designer = designerRepository.findById(request.getDesignerId())
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
-        designerReviewService.createDesignerReview(request, designer);
+    public BaseResponse<Object> createDesignerReview(@RequestBody DesignerReviewCreateDto request, @RequestHeader("Authorization") String authorizationHeader){
+        Long designerId = userFindService.getUserId(authorizationHeader);
+        designerReviewService.createDesignerReview(request, designerId);
         return BaseResponse.success();
     }
 }

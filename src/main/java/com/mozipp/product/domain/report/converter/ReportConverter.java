@@ -9,19 +9,19 @@ import com.mozipp.product.users.Model;
 
 public class ReportConverter {
 
-    public static Report toModelReport(ModelReportCreateDto request, Model model, DesignerProduct designerProduct, Long designerId) {
+    public static Report toModelReport(ModelReportCreateDto request, Long modelId, DesignerProduct designerProduct, Long designerId) {
         return Report.builder()
                 .reportContent(request.getReportContent())
-                .userId(model.getId())
+                .userId(modelId)
                 .targetId(designerId)
                 .designerProduct(designerProduct)
                 .build();
     }
 
-    public static Report toDesignerReport(DesignerReportCreateDto request, Designer designer, DesignerProduct designerProduct, Long modelId) {
+    public static Report toDesignerReport(DesignerReportCreateDto request, Long designerId, DesignerProduct designerProduct, Long modelId) {
         return Report.builder()
                 .reportContent(request.getReportContent())
-                .userId(designer.getId())
+                .userId(designerId)
                 .targetId(modelId)
                 .designerProduct(designerProduct)
                 .build();

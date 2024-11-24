@@ -36,8 +36,8 @@ public class DesignerProductService {
     }
 
     @Transactional
-    public void createDesignerProduct(DesignerProductCreateDto request) {
-        Designer designer = designerRepository.findById(request.getDesignerId())
+    public void createDesignerProduct(DesignerProductCreateDto request, Long designerId) {
+        Designer designer = designerRepository.findById(designerId)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
 
         DesignerProduct designerProduct = DesignerProductConverter.toDesignerProduct(request);
@@ -45,7 +45,9 @@ public class DesignerProductService {
         designerProductRepository.save(designerProduct);
     }
 
-    public List<DesignerProductListDto> getMyDesignerProducts(Designer designer, ProductStatus status) {
+    public List<DesignerProductListDto> getMyDesignerProducts(Long designerId, ProductStatus status) {
+        Designer designer = designerRepository.findById(designerId)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
         List<DesignerProduct> myDesignerProducts = designerProductRepository.findByDesignerAndProductStatus(designer, status);
         return DesignerProductConverter.toDesignerProductListDto(myDesignerProducts);
     }

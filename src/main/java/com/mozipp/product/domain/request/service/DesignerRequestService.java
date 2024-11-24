@@ -15,6 +15,7 @@ import com.mozipp.product.domain.review.service.ModelReviewService;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
 import com.mozipp.product.users.Designer;
+import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,7 @@ public class DesignerRequestService {
     private final ReservationRequestRepository reservationRequestRepository;
     private final ReservationRepository reservationRepository;
     private final ModelReviewService modelReviewService;
+    private final DesignerRepository designerRepository;
 
     @Transactional
     public void acceptReservationRequest(Long reservationRequestId) {
@@ -60,7 +62,9 @@ public class DesignerRequestService {
         designerProduct.updateProductStatus(ProductStatus.AVAILABLE);
     }
 
-    public List<DesignerRequestListDto> getReservationRequestList(Designer designer, RequestStatus status) {
+    public List<DesignerRequestListDto> getReservationRequestList(Long designerId, RequestStatus status) {
+        Designer designer = designerRepository.findById(designerId)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
         List<ReservationRequest> reservationRequests = reservationRequestRepository.findByDesignerProduct_Designer_IdAndRequestStatus(designer.getId(), status);
         List<DesignerRequestListDto> reservationRequestList = new ArrayList<>();
 

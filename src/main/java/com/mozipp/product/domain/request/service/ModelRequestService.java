@@ -12,6 +12,7 @@ import com.mozipp.product.domain.request.repository.ReservationRequestRepository
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
 import com.mozipp.product.users.Model;
+import com.mozipp.product.users.repository.ModelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,9 +26,12 @@ public class ModelRequestService {
 
     private final ReservationRequestRepository reservationRequestRepository;
     private final DesignerProductRepository designerProductRepository;
+    private final ModelRepository modelRepository;
 
     @Transactional
-    public void createModelReservationRequest(Model model, ModelRequestCreateDto request) {
+    public void createModelReservationRequest(Long modelId, ModelRequestCreateDto request) {
+        Model model = modelRepository.findById(modelId)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_MODEL));
         DesignerProduct designerProduct = designerProductRepository.findById(request.getDesignerProductId())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER_PRODUCT));
 
@@ -36,8 +40,9 @@ public class ModelRequestService {
         reservationRequestRepository.save(reservationRequest);
     }
 
-    public List<ModelRequestListDto> getModelReservationRequest(Model model, RequestStatus status) {
-
+    public List<ModelRequestListDto> getModelReservationRequest(Long modelId, RequestStatus status) {
+        Model model = modelRepository.findById(modelId)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_MODEL));
         List<ReservationRequest> reservationRequests = model.getReservationRequests();
         List<ModelRequestListDto> modelRequestList = new ArrayList<>();
 

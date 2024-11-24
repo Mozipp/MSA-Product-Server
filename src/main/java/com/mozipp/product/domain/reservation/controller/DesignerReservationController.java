@@ -1,5 +1,6 @@
 package com.mozipp.product.domain.reservation.controller;
 
+import com.mozipp.product.domain.product.service.UserFindService;
 import com.mozipp.product.domain.reservation.dto.DesignerReservationHandleDto;
 import com.mozipp.product.domain.reservation.dto.DesignerReservationListDto;
 import com.mozipp.product.domain.reservation.entity.ReservationStatus;
@@ -20,14 +21,13 @@ import java.util.List;
 public class DesignerReservationController {
 
     private final DesignerReservationService designerReservationService;
-    private final DesignerRepository designerRepository;
+    private final UserFindService userFindService;
 
     // Designer 예약 확정 리스트 조회
-    @GetMapping("/{designerId}")
-    public BaseResponse<List<DesignerReservationListDto>> getDesignerReservationList(@PathVariable Long designerId, @RequestParam("status") ReservationStatus status) {
-        Designer designer = designerRepository.findById(designerId)
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
-        return BaseResponse.success(designerReservationService.getDesignerReservationList(designer, status));
+    @GetMapping
+    public BaseResponse<List<DesignerReservationListDto>> getDesignerReservationList(@RequestParam("status") ReservationStatus status, @RequestHeader("Authorization") String authorizationHeader) {
+        Long designerId = userFindService.getUserId(authorizationHeader);
+        return BaseResponse.success(designerReservationService.getDesignerReservationList(designerId, status));
     }
 
     // Designer 예약 확정 처리

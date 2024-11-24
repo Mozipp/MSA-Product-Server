@@ -1,5 +1,6 @@
 package com.mozipp.product.domain.request.controller;
 
+import com.mozipp.product.domain.product.service.UserFindService;
 import com.mozipp.product.domain.request.dto.DesignerRequestListDto;
 import com.mozipp.product.domain.request.dto.ModelRequestCreateDto;
 import com.mozipp.product.domain.request.dto.ModelRequestListDto;
@@ -21,23 +22,21 @@ import java.util.List;
 public class ModelRequestController {
 
     private final ModelRequestService modelRequestService;
-    private final ModelRepository modelRepository;
+    private final UserFindService userFindService;
 
     // Model 예약 요청
     @PostMapping
-    public BaseResponse<Object> createModelReservationRequest(@RequestBody ModelRequestCreateDto request){
-        Model model = modelRepository.findById(request.getModelId())
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_MODEL));
-        modelRequestService.createModelReservationRequest(model, request);
+    public BaseResponse<Object> createModelReservationRequest(@RequestBody ModelRequestCreateDto request, @RequestHeader("Authorization") String authorizationHeader){
+        Long modelId = userFindService.getUserId(authorizationHeader);
+        modelRequestService.createModelReservationRequest(modelId, request);
         return BaseResponse.success();
     }
 
     // Model 예약 요청 리스트 조회
-    @GetMapping("/{modelId}")
-    public BaseResponse<List<ModelRequestListDto>> getModelReservationRequest(@PathVariable Long modelId, @RequestParam("status") RequestStatus status) {
-        Model model = modelRepository.findById(modelId)
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_MODEL));
-        return BaseResponse.success(modelRequestService.getModelReservationRequest(model, status));
+    @GetMapping
+    public BaseResponse<List<ModelRequestListDto>> getModelReservationRequest(@RequestParam("status") RequestStatus status, @RequestHeader("Authorization") String authorizationHeader) {
+        Long modelId = userFindService.getUserId(authorizationHeader);
+        return BaseResponse.success(modelRequestService.getModelReservationRequest(modelId, status));
     }
 
 }
