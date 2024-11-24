@@ -3,6 +3,7 @@ package com.mozipp.product.domain.reservation.service;
 import com.mozipp.product.domain.reservation.converter.ReservationConverter;
 import com.mozipp.product.domain.reservation.dto.ModelReservationListDto;
 import com.mozipp.product.domain.reservation.entity.Reservation;
+import com.mozipp.product.domain.reservation.entity.ReservationStatus;
 import com.mozipp.product.domain.reservation.repository.ReservationRepository;
 import com.mozipp.product.users.Model;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +18,16 @@ public class ModelReservationService {
 
     private final ReservationRepository reservationRepository;
 
-    public List<ModelReservationListDto> getModelReservationList(Model model) {
+    public List<ModelReservationListDto> getModelReservationList(Model model, ReservationStatus status) {
 
         List<Reservation> reservations = reservationRepository.findAllByReservationRequest_Model(model);
         List<ModelReservationListDto> modelReservationListDtos = new ArrayList<>();
 
         for (Reservation reservation : reservations) {
-            ModelReservationListDto dto = ReservationConverter.toModelReservationListDto(reservation);
-            modelReservationListDtos.add(dto);
+            if(reservation.getReservationStatus() == status) {
+                ModelReservationListDto dto = ReservationConverter.toModelReservationListDto(reservation);
+                modelReservationListDtos.add(dto);
+            }
         }
 
         return modelReservationListDtos;

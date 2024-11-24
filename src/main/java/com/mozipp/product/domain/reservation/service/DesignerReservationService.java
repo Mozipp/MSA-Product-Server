@@ -30,18 +30,20 @@ public class DesignerReservationService {
     private final ReservationRepository reservationRepository;
     private final ModelReviewService modelReviewService;
 
-    public List<DesignerReservationListDto> getDesignerReservationList(Designer designer) {
+    public List<DesignerReservationListDto> getDesignerReservationList(Designer designer, ReservationStatus status) {
 
         List<Reservation> reservations = reservationRepository.findAllByReservationRequest_DesignerProduct_Designer(designer);
         List<DesignerReservationListDto> designerReservationListDtos = new ArrayList<>();
 
         for (Reservation reservation : reservations) {
-            ReservationRequest request = reservation.getReservationRequest();
-            Model model = request.getModel();
-            List<ReviewDto> reviews = modelReviewService.getReviewsForModel(model.getId());
+            if(reservation.getReservationStatus() == status) {
+                ReservationRequest request = reservation.getReservationRequest();
+                Model model = request.getModel();
+                List<ReviewDto> reviews = modelReviewService.getReviewsForModel(model.getId());
 
-            DesignerReservationListDto dto = ReservationConverter.toDesignerReservationListDto(reservation, reviews);
-            designerReservationListDtos.add(dto);
+                DesignerReservationListDto dto = ReservationConverter.toDesignerReservationListDto(reservation, reviews);
+                designerReservationListDtos.add(dto);
+            }
         }
 
         return designerReservationListDtos;
