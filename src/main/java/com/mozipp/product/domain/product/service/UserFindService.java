@@ -33,6 +33,7 @@ public class UserFindService {
     }
 
     public Long getUserId(String accessToken) {
+        accessToken = accessToken.substring(7);
         Claims claims = jwtUtil.getClaimsFromToken(accessToken);
         String username = claims.getSubject();
         User user = userRepository.findByUsername(username)
