@@ -20,7 +20,6 @@ import java.util.List;
 public class ModelReservationController {
 
     private final ModelReservationService modelReservationService;
-    private final ModelRepository modelRepository;
     private final UserFindService userFindService;
 
     // Model 예약 확정 리스트 조회

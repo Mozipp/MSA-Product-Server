@@ -25,6 +25,8 @@ public class ReservationRequestConverter {
 
         return DesignerRequestListDto.builder()
                 .reservationRequestId(request.getId())
+                .designerProductId(request.getDesignerProduct().getId())
+                .title(request.getDesignerProduct().getTitle())
                 .reservationRequestStatus(request.getRequestStatus())
                 .model(modelDto)
                 .reservationRequestDate(request.getReservationRequestDate())

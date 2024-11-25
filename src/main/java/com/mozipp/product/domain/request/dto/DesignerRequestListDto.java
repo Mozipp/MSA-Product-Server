@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DesignerRequestListDto {
     private Long reservationRequestId;
+    private Long designerProductId;
+    private String title;
     private RequestStatus reservationRequestStatus;
     private ReservationRequestModelDto model;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -21,8 +23,10 @@ public class DesignerRequestListDto {
     private LocalDateTime createdAt;
 
     @Builder
-    public DesignerRequestListDto(Long reservationRequestId, RequestStatus reservationRequestStatus, ReservationRequestModelDto model, LocalDateTime reservationRequestDate, LocalDateTime createdAt) {
+    public DesignerRequestListDto(Long reservationRequestId, Long designerProductId, String title, RequestStatus reservationRequestStatus, ReservationRequestModelDto model, LocalDateTime reservationRequestDate, LocalDateTime createdAt) {
         this.reservationRequestId = reservationRequestId;
+        this.designerProductId = designerProductId;
+        this.title = title;
         this.reservationRequestStatus = reservationRequestStatus;
         this.model = model;
         this.reservationRequestDate = reservationRequestDate;

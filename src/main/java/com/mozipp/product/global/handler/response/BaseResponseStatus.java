@@ -22,8 +22,8 @@ public enum BaseResponseStatus {
      * 401 UNAUTHORIZED 권한없음(인증 실패)
      */
     UNAUTHORIZED(false, 401, HttpStatus.UNAUTHORIZED, "인증에 실패"),
-    UNAUTHORIZED_ID(false, 402, HttpStatus.UNAUTHORIZED, "인증에 실패)"),
-    UNAUTHORIZED_PASSWORD(false, 403, HttpStatus.UNAUTHORIZED, "인증에 실패)"),
+    UNAUTHORIZED_ID(false, 40101, HttpStatus.UNAUTHORIZED, "인증에 실패)"),
+    UNAUTHORIZED_PASSWORD(false, 40102, HttpStatus.UNAUTHORIZED, "인증에 실패)"),
 
     /**
      * 403 FORBIDDEN 권한없음
