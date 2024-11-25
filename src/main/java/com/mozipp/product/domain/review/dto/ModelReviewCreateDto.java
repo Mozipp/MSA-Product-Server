@@ -6,7 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ModelReviewCreateDto {
-    private Long modelId;
     private Long designerProductId;
     private String reviewContent;
 }

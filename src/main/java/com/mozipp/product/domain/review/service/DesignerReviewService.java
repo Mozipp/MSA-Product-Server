@@ -11,6 +11,7 @@ import com.mozipp.product.domain.review.repository.ReviewRepository;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
 import com.mozipp.product.users.Designer;
+import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,7 @@ public class DesignerReviewService {
     private final ReviewRepository reviewRepository;
     private final DesignerProductRepository designerProductRepository;
     private final UserFindService userFindService;
+    private final DesignerRepository designerRepository;
 
     public List<ReviewDto> getReviewsForDesigner(Long designerId) {
         List<Review> reviews = reviewRepository.findByTargetId(designerId);
@@ -43,13 +45,14 @@ public class DesignerReviewService {
     }
 
     @Transactional
-    public void createDesignerReview(DesignerReviewCreateDto request, Designer designer) {
+    public void createDesignerReview(DesignerReviewCreateDto request, Long designerId) {
+
         DesignerProduct designerProduct = designerProductRepository.findById(request.getDesignerProductId())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER_PRODUCT));
 
         Long modelId = userFindService.getModelId(request.getDesignerProductId());
 
-        Review review = ReviewConverter.toDesignerReview(request, designer, designerProduct, modelId);
+        Review review = ReviewConverter.toDesignerReview(request, designerId, designerProduct, modelId);
         reviewRepository.save(review);
     }
 

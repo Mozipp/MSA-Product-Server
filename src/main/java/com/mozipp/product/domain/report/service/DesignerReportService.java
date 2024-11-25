@@ -10,6 +10,7 @@ import com.mozipp.product.domain.report.repository.ReportRepository;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
 import com.mozipp.product.users.Designer;
+import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,13 +24,11 @@ public class DesignerReportService {
     private final UserFindService userFindService;
 
     @Transactional
-    public void createDesignerReport(DesignerReportCreateDto request, Designer designer) {
+    public void createDesignerReport(DesignerReportCreateDto request, Long designerId) {
         DesignerProduct designerProduct = designerProductRepository.findById(request.getDesignerProductId())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER_PRODUCT));
-
         Long modelId = userFindService.getModelId(request.getDesignerProductId());
-
-        Report report = ReportConverter.toDesignerReport(request, designer, designerProduct, modelId);
+        Report report = ReportConverter.toDesignerReport(request, designerId, designerProduct, modelId);
         reportRepository.save(report);
     }
 }

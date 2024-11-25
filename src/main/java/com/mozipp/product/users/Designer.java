@@ -32,19 +32,6 @@ public class Designer extends User {
 
     @OneToMany(mappedBy = "designer")
     private List<DesignerProduct> products = new ArrayList<>();
-//
-//    public void updatePetShop(PetShop petShop) {
-//        this.petShop = petShop;
-//        petShop.getDesigners().add(this);
-//    }
-//
-//    public void updateCareer(String career) {
-//        this.career = career;
-//    }
-//
-//    public void updateLicenseImageUrl(String licenseImageUrl) {
-//        this.licenseImageUrl = licenseImageUrl;
-//    }
 
     public void addDesignerProduct(DesignerProduct product) {
         products.add(product);

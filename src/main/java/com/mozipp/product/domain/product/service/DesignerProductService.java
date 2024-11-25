@@ -5,6 +5,7 @@ import com.mozipp.product.domain.product.dto.DesignerProductCreateDto;
 import com.mozipp.product.domain.product.dto.DesignerProductListDto;
 import com.mozipp.product.domain.product.dto.DesignerProductProfileDto;
 import com.mozipp.product.domain.product.entity.DesignerProduct;
+import com.mozipp.product.domain.product.entity.ProductStatus;
 import com.mozipp.product.domain.product.repository.DesignerProductRepository;
 import com.mozipp.product.domain.request.dto.ReviewDto;
 import com.mozipp.product.domain.review.service.DesignerReviewService;
@@ -29,14 +30,14 @@ public class DesignerProductService {
     private final DesignerReviewService designerReviewService;
     private final DesignerRepository designerRepository;
 
-    public List<DesignerProductListDto> getDesignerProducts() {
-        List<DesignerProduct> designerProducts = designerProductRepository.findAll();
+    public List<DesignerProductListDto> getDesignerProducts(ProductStatus status) {
+        List<DesignerProduct> designerProducts = designerProductRepository.findByProductStatus(status);
         return DesignerProductConverter.toDesignerProductListDto(designerProducts);
     }
 
     @Transactional
-    public void createDesignerProduct(DesignerProductCreateDto request) {
-        Designer designer = designerRepository.findById(request.getDesignerId())
+    public void createDesignerProduct(DesignerProductCreateDto request, Long designerId) {
+        Designer designer = designerRepository.findById(designerId)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
 
         DesignerProduct designerProduct = DesignerProductConverter.toDesignerProduct(request);
@@ -44,9 +45,11 @@ public class DesignerProductService {
         designerProductRepository.save(designerProduct);
     }
 
-    public List<DesignerProductListDto> getMyDesignerProducts(Designer designer) {
-        List<DesignerProduct> designerProducts = designer.getProducts();
-        return DesignerProductConverter.toDesignerProductListDto(designerProducts);
+    public List<DesignerProductListDto> getMyDesignerProducts(Long designerId, ProductStatus status) {
+        Designer designer = designerRepository.findById(designerId)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
+        List<DesignerProduct> myDesignerProducts = designerProductRepository.findByDesignerAndProductStatus(designer, status);
+        return DesignerProductConverter.toDesignerProductListDto(myDesignerProducts);
     }
 
     public DesignerProductProfileDto getModelToDesignerProfile(Long designerProductId) {
@@ -56,11 +59,7 @@ public class DesignerProductService {
         Designer designer = designerProduct.getDesigner();
         PetShop petShop = designer.getPetShop();
 
-        PetShopDto petShopDto = PetShopDto.builder()
-                .petShopName(petShop.getPetShopName())
-                .address(petShop.getAddress())
-                .addressDetail(petShop.getAddressDetail())
-                .build();
+        PetShopDto petShopDto = DesignerProductConverter.toPetShopDto(petShop);
 
         List<PetGroomingImage> petGroomingImages = designer.getPetGroomingImages();
         List<ReviewDto> reviews = designerReviewService.getReviewsForDesigner(designer.getId());

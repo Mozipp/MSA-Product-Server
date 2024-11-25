@@ -9,19 +9,19 @@ import com.mozipp.product.users.Model;
 
 public class ReviewConverter {
 
-    public static Review toDesignerReview(DesignerReviewCreateDto request, Designer designer, DesignerProduct designerProduct, Long modelId) {
+    public static Review toDesignerReview(DesignerReviewCreateDto request, Long designerId, DesignerProduct designerProduct, Long modelId) {
         return Review.builder()
                 .reviewContent(request.getReviewContent())
-                .userId(designer.getId())
+                .userId(designerId)
                 .targetId(modelId)
                 .designerProduct(designerProduct)
                 .build();
     }
 
-    public static Review toModelReview(ModelReviewCreateDto request, Model model, DesignerProduct designerProduct, Long designerId) {
+    public static Review toModelReview(ModelReviewCreateDto request, Long modelId, DesignerProduct designerProduct, Long designerId) {
         return Review.builder()
                 .reviewContent(request.getReviewContent())
-                .userId(model.getId())
+                .userId(modelId)
                 .targetId(designerId)
                 .designerProduct(designerProduct)
                 .build();
