@@ -9,8 +9,6 @@ import com.mozipp.product.domain.report.entity.Report;
 import com.mozipp.product.domain.report.repository.ReportRepository;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
-import com.mozipp.product.users.Designer;
-import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

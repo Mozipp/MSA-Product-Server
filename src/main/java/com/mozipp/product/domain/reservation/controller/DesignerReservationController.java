@@ -5,11 +5,7 @@ import com.mozipp.product.domain.reservation.dto.DesignerReservationHandleDto;
 import com.mozipp.product.domain.reservation.dto.DesignerReservationListDto;
 import com.mozipp.product.domain.reservation.entity.ReservationStatus;
 import com.mozipp.product.domain.reservation.service.DesignerReservationService;
-import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponse;
-import com.mozipp.product.global.handler.response.BaseResponseStatus;
-import com.mozipp.product.users.Designer;
-import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

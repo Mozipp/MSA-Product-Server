@@ -4,8 +4,6 @@ import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.review.dto.DesignerReviewCreateDto;
 import com.mozipp.product.domain.review.dto.ModelReviewCreateDto;
 import com.mozipp.product.domain.review.entity.Review;
-import com.mozipp.product.users.Designer;
-import com.mozipp.product.users.Model;
 
 public class ReviewConverter {
 
