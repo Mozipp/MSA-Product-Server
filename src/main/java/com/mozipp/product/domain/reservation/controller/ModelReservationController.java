@@ -4,11 +4,7 @@ import com.mozipp.product.domain.product.service.UserFindService;
 import com.mozipp.product.domain.reservation.dto.ModelReservationListDto;
 import com.mozipp.product.domain.reservation.entity.ReservationStatus;
 import com.mozipp.product.domain.reservation.service.ModelReservationService;
-import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponse;
-import com.mozipp.product.global.handler.response.BaseResponseStatus;
-import com.mozipp.product.users.Model;
-import com.mozipp.product.users.repository.ModelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

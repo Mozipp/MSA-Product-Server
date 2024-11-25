@@ -3,11 +3,7 @@ package com.mozipp.product.domain.review.controller;
 import com.mozipp.product.domain.product.service.UserFindService;
 import com.mozipp.product.domain.review.dto.DesignerReviewCreateDto;
 import com.mozipp.product.domain.review.service.DesignerReviewService;
-import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponse;
-import com.mozipp.product.global.handler.response.BaseResponseStatus;
-import com.mozipp.product.users.Designer;
-import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

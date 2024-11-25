@@ -4,11 +4,7 @@ import com.mozipp.product.domain.product.service.UserFindService;
 import com.mozipp.product.domain.request.dto.DesignerRequestListDto;
 import com.mozipp.product.domain.request.entity.RequestStatus;
 import com.mozipp.product.domain.request.service.DesignerRequestService;
-import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponse;
-import com.mozipp.product.global.handler.response.BaseResponseStatus;
-import com.mozipp.product.users.Designer;
-import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

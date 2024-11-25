@@ -2,7 +2,6 @@ package com.mozipp.product.domain.request.service;
 
 import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.product.entity.ProductStatus;
-import com.mozipp.product.domain.product.repository.DesignerProductRepository;
 import com.mozipp.product.domain.request.converter.ReservationRequestConverter;
 import com.mozipp.product.domain.request.dto.DesignerRequestListDto;
 import com.mozipp.product.domain.request.dto.ReviewDto;
@@ -32,7 +31,6 @@ public class DesignerRequestService {
     private final ReservationRepository reservationRepository;
     private final ModelReviewService modelReviewService;
     private final DesignerRepository designerRepository;
-    private final DesignerProductRepository designerProductRepository;
 
     @Transactional
     public void acceptReservationRequest(Long reservationRequestId) {

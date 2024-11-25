@@ -10,7 +10,6 @@ import com.mozipp.product.domain.review.entity.Review;
 import com.mozipp.product.domain.review.repository.ReviewRepository;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
-import com.mozipp.product.users.Designer;
 import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

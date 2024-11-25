@@ -4,8 +4,6 @@ import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.report.dto.DesignerReportCreateDto;
 import com.mozipp.product.domain.report.dto.ModelReportCreateDto;
 import com.mozipp.product.domain.report.entity.Report;
-import com.mozipp.product.users.Designer;
-import com.mozipp.product.users.Model;
 
 public class ReportConverter {
 
