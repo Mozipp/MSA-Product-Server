@@ -1,6 +1,8 @@
 package com.mozipp.product.domain.request.controller;
 
+import com.mozipp.product.domain.product.service.UserFindService;
 import com.mozipp.product.domain.request.dto.DesignerRequestListDto;
+import com.mozipp.product.domain.request.entity.RequestStatus;
 import com.mozipp.product.domain.request.service.DesignerRequestService;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponse;
@@ -18,14 +20,13 @@ import java.util.List;
 public class DesignerRequestController {
 
     private final DesignerRequestService designerReservationRequestService;
-    private final DesignerRepository designerRepository;
+    private final UserFindService userFindService;
 
     // Designer 예약 요청 리스트 조회
-    @GetMapping("/{designerId}")
-    public BaseResponse<List<DesignerRequestListDto>> getReservationRequestList(@PathVariable Long designerId) {
-        Designer designer = designerRepository.findById(designerId)
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
-        List<DesignerRequestListDto> designerRequestList = designerReservationRequestService.getReservationRequestList(designer);
+    @GetMapping
+    public BaseResponse<List<DesignerRequestListDto>> getReservationRequestList(@RequestParam("status") RequestStatus status, @RequestHeader("Authorization") String authorizationHeader) {
+        Long designerId = userFindService.getUserId(authorizationHeader);
+        List<DesignerRequestListDto> designerRequestList = designerReservationRequestService.getReservationRequestList(designerId, status);
         return BaseResponse.success(designerRequestList);
     }
 

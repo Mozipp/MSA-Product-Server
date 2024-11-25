@@ -1,5 +1,6 @@
 package com.mozipp.product.domain.review.controller;
 
+import com.mozipp.product.domain.product.service.UserFindService;
 import com.mozipp.product.domain.review.dto.ModelReviewCreateDto;
 import com.mozipp.product.domain.review.service.ModelReviewService;
 import com.mozipp.product.global.handler.BaseException;
@@ -8,10 +9,7 @@ import com.mozipp.product.global.handler.response.BaseResponseStatus;
 import com.mozipp.product.users.Model;
 import com.mozipp.product.users.repository.ModelRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,14 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class ModelReviewController {
 
     private final ModelReviewService modelReviewService;
-    private final ModelRepository modelRepository;
+    private final UserFindService userFindService;
 
     // Model 리뷰 등록
     @PostMapping
-    public BaseResponse<Object> createModelReview(@RequestBody ModelReviewCreateDto request) {
-        Model model = modelRepository.findById(request.getModelId())
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_MODEL));
-        modelReviewService.createModelReview(request, model);
+    public BaseResponse<Object> createModelReview(@RequestBody ModelReviewCreateDto request, @RequestHeader("Authorization") String authorizationHeader) {
+        Long modelId = userFindService.getUserId(authorizationHeader);
+        modelReviewService.createModelReview(request, modelId);
         return BaseResponse.success();
     }
 }

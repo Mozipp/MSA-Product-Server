@@ -16,6 +16,7 @@ import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
 import com.mozipp.product.users.Designer;
 import com.mozipp.product.users.Model;
+import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,19 +30,25 @@ public class DesignerReservationService {
 
     private final ReservationRepository reservationRepository;
     private final ModelReviewService modelReviewService;
+    private final DesignerRepository designerRepository;
 
-    public List<DesignerReservationListDto> getDesignerReservationList(Designer designer) {
+    public List<DesignerReservationListDto> getDesignerReservationList(Long designerId, ReservationStatus status) {
+
+        Designer designer = designerRepository.findById(designerId)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
 
         List<Reservation> reservations = reservationRepository.findAllByReservationRequest_DesignerProduct_Designer(designer);
         List<DesignerReservationListDto> designerReservationListDtos = new ArrayList<>();
 
         for (Reservation reservation : reservations) {
-            ReservationRequest request = reservation.getReservationRequest();
-            Model model = request.getModel();
-            List<ReviewDto> reviews = modelReviewService.getReviewsForModel(model.getId());
+            if(reservation.getReservationStatus() == status) {
+                ReservationRequest request = reservation.getReservationRequest();
+                Model model = request.getModel();
+                List<ReviewDto> reviews = modelReviewService.getReviewsForModel(model.getId());
 
-            DesignerReservationListDto dto = ReservationConverter.toDesignerReservationListDto(reservation, reviews);
-            designerReservationListDtos.add(dto);
+                DesignerReservationListDto dto = ReservationConverter.toDesignerReservationListDto(reservation, reviews);
+                designerReservationListDtos.add(dto);
+            }
         }
 
         return designerReservationListDtos;

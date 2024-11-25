@@ -22,6 +22,8 @@ public enum BaseResponseStatus {
      * 401 UNAUTHORIZED 권한없음(인증 실패)
      */
     UNAUTHORIZED(false, 401, HttpStatus.UNAUTHORIZED, "인증에 실패"),
+    UNAUTHORIZED_ID(false, 402, HttpStatus.UNAUTHORIZED, "인증에 실패)"),
+    UNAUTHORIZED_PASSWORD(false, 403, HttpStatus.UNAUTHORIZED, "인증에 실패)"),
 
     /**
      * 403 FORBIDDEN 권한없음
@@ -37,6 +39,7 @@ public enum BaseResponseStatus {
     NOT_FOUND_RESERVATION(false, 40403, HttpStatus.NOT_FOUND, "해당 Reservation을 찾을 수 없음"),
     NOT_FOUND_MODEL(false, 40404, HttpStatus.NOT_FOUND, "해당 Model을 찾을 수 없음"),
     NOT_FOUND_DESIGNER(false, 40405, HttpStatus.NOT_FOUND, "해당 Designer를 찾을 수 없음"),
+    NOT_FOUND_USER(false, 40406, HttpStatus.NOT_FOUND, "해당 User를 찾을 수 없음"),
 
 
 
