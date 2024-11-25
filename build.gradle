@@ -49,6 +49,12 @@ dependencies {
 	// WebClient
 	implementation 'org.springframework:spring-webflux:6.0.11'
 
+	// Thymeleaf
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	// DevTools
+	runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+	// JSON-Simple
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 }
 
 tasks.named('test') {
