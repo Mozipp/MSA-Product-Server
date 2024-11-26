@@ -69,7 +69,7 @@ public class ReservationRequestConverter {
         return RequestProductDto.builder()
                 .designerProductId(designerProduct.getId())
                 .title(designerProduct.getTitle())
-                .description(designerProduct.getDescription())
+                .introduction(designerProduct.getIntroduction())
                 .design(designerProduct.getDesign())
                 .modelPreferDescription(designerProduct.getModelPreferDescription())
                 .preferBreed(designerProduct.getPreferBreed())

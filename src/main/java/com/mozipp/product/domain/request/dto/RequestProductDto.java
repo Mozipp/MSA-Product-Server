@@ -11,17 +11,17 @@ import lombok.NoArgsConstructor;
 public class RequestProductDto {
     private Long designerProductId;
     private String title;
-    private String description;
+    private String introduction;
     private String design;
     private String modelPreferDescription;
     private String preferBreed;
     private PetShopDto petShop;
 
     @Builder
-    public RequestProductDto(Long designerProductId, String title, String description, String design, String modelPreferDescription, String preferBreed, PetShopDto petShop) {
+    public RequestProductDto(Long designerProductId, String title, String introduction, String design, String modelPreferDescription, String preferBreed, PetShopDto petShop) {
         this.designerProductId = designerProductId;
         this.title = title;
-        this.description = description;
+        this.introduction = introduction;
         this.design = design;
         this.modelPreferDescription = modelPreferDescription;
         this.preferBreed = preferBreed;

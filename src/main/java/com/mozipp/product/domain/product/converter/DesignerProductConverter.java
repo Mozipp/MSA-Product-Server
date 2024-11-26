@@ -30,7 +30,7 @@ public class DesignerProductConverter {
             DesignerProductListDto productListDto = DesignerProductListDto.builder()
                     .designerProductId(designerProduct.getId())
                     .title(designerProduct.getTitle())
-                    .introduction(designerProduct.getDescription())
+                    .introduction(designerProduct.getIntroduction())
                     .design(designerProduct.getDesign())
                     .modelPreferDescription(designerProduct.getModelPreferDescription())
                     .preferBreed(designerProduct.getPreferBreed())
@@ -46,7 +46,7 @@ public class DesignerProductConverter {
     public static DesignerProduct toDesignerProduct(DesignerProductCreateDto request) {
         return DesignerProduct.builder()
                 .title(request.getTitle())
-                .description(request.getIntroduction())
+                .introduction(request.getIntroduction())
                 .design(request.getDesign())
                 .modelPreferDescription(request.getModelPreferDescription())
                 .preferBreed(request.getPreferBreed())
