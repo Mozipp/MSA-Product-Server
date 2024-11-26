@@ -25,7 +25,6 @@ public class ModelReviewService {
     private final ReviewRepository reviewRepository;
     private final DesignerProductRepository designerProductRepository;
     private final UserFindService userFindService;
-    private final ModelRepository modelRepository;
 
     public List<ReviewDto> getReviewsForModel(Long modelId) {
         List<Review> reviews = reviewRepository.findByTargetId(modelId);

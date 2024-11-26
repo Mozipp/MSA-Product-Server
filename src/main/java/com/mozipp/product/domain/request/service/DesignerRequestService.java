@@ -17,6 +17,7 @@ import com.mozipp.product.global.handler.response.BaseResponseStatus;
 import com.mozipp.product.users.Designer;
 import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DesignerRequestService {
 
     private final ReservationRequestRepository reservationRequestRepository;
@@ -65,10 +67,13 @@ public class DesignerRequestService {
     public List<DesignerRequestListDto> getReservationRequestList(Long designerId, RequestStatus status) {
         Designer designer = designerRepository.findById(designerId)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
+        log.info("Designer ID : {}, Username : {}", designer.getId(), designer.getUsername());
         List<ReservationRequest> reservationRequests = reservationRequestRepository.findByDesignerProduct_Designer_IdAndRequestStatus(designer.getId(), status);
+        log.info("Num of reservation requests : {}", reservationRequests.size());
         List<DesignerRequestListDto> reservationRequestList = new ArrayList<>();
 
         for(ReservationRequest request : reservationRequests) {
+            log.info("ReservationRequestId = {}, Status = {}", request.getId(), request.getRequestStatus());
             Long modelId = request.getModel().getId();
             List<ReviewDto> reviews = modelReviewService.getReviewsForModel(modelId);
             DesignerRequestListDto dto = ReservationRequestConverter.toDesignerRequestListDto(request, reviews);
