@@ -9,6 +9,7 @@ import com.mozipp.product.global.handler.response.BaseResponseStatus;
 import com.mozipp.product.users.Model;
 import com.mozipp.product.users.repository.ModelRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,8 +22,7 @@ public class ModelReportController {
 
     // Model 신고 등록
     @PostMapping
-    public BaseResponse<Object> createModelReport(@RequestBody ModelReportCreateDto request, @RequestHeader("Authorization") String authorizationHeader) {
-        Long modelId = userFindService.getUserId(authorizationHeader);
+    public BaseResponse<Object> createModelReport(@RequestBody ModelReportCreateDto request, @AuthenticationPrincipal Long modelId) {
         modelReportService.createModelReport(request, modelId);
         return BaseResponse.success();
     }

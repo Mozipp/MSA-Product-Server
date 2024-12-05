@@ -18,8 +18,10 @@ import com.mozipp.product.users.PetGroomingImage;
 import com.mozipp.product.users.PetShopDto;
 import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
@@ -30,6 +32,10 @@ public class DesignerProductService {
     private final DesignerProductRepository designerProductRepository;
     private final DesignerReviewService designerReviewService;
     private final DesignerRepository designerRepository;
+    private final WebClient webClient;
+
+    @Value("${user.service.url}")
+    private String userServiceUrl;
 
     public List<DesignerProductListDto> getDesignerProducts(ProductStatus status) {
         List<DesignerProduct> designerProducts = designerProductRepository.findByProductStatus(status);
@@ -82,6 +88,20 @@ public class DesignerProductService {
         designerProduct.updateDesigner(designer);
         designerProductRepository.save(designerProduct);
 
-        //User 서버와 통신하여 naverPlaceUrl 정보를 Portfolio Entity에 저장해야함
+//        //User 서버와 통신하여 naverPlaceUrl 정보를 Portfolio Entity에 저장해야함
+//        String naverPlaceUrl = request.getNaverPlaceUrl();
+//
+//        webClient.post()
+//                .uri(userServiceUrl + "/api/users/portfolios")
+//                .headers(headers -> headers.setBearerAuth(accessToken))
+//                .bodyValue(new PortfolioRequest(designerId, request.getNaverPlaceUrl()))
+//                .retrieve()
+//                .bodyToMono(PortfolioResponseDto.class)
+//                .doOnSuccess(response -> logger.info("Portfolio created successfully on User server"))
+//                .doOnError(error -> {
+//                    logger.error("Portfolio creation on User server failed: {}", error.getMessage());
+//                    throw new BaseException(BaseResponseStatus.PORTFOLIO_CREATION_FAILED);
+//                })
+//                .block(); // 블로킹 호출
     }
 }

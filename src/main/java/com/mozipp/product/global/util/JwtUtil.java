@@ -61,11 +61,15 @@ public class JwtUtil {
     }
 
     public Claims getClaimsFromToken(String token) {
-        logger.info("Extracting claims from token...");
-        return Jwts.parserBuilder()
-                .setSigningKey(keyPair.getPublic())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        logger.debug("Extracting claims from token...");
+        try {
+            return Jwts.parserBuilder()
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            logger.error("Failed to extract claims from token: {}", e.getMessage());
+            throw new RuntimeException("토큰에서 클레임을 추출할 수 없습니다.");
+        }
     }
 }

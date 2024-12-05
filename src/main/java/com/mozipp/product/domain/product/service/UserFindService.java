@@ -40,4 +40,10 @@ public class UserFindService {
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_USER));
         return user.getId();
     }
+
+    public Long getUserIdByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_USER));
+        return user.getId();
+    }
 }

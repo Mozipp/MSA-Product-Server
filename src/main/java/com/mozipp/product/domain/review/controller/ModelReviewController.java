@@ -5,6 +5,7 @@ import com.mozipp.product.domain.review.dto.ModelReviewCreateDto;
 import com.mozipp.product.domain.review.service.ModelReviewService;
 import com.mozipp.product.global.handler.response.BaseResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,8 +18,7 @@ public class ModelReviewController {
 
     // Model 리뷰 등록
     @PostMapping
-    public BaseResponse<Object> createModelReview(@RequestBody ModelReviewCreateDto request, @RequestHeader("Authorization") String authorizationHeader) {
-        Long modelId = userFindService.getUserId(authorizationHeader);
+    public BaseResponse<Object> createModelReview(@RequestBody ModelReviewCreateDto request, @AuthenticationPrincipal Long modelId) {
         modelReviewService.createModelReview(request, modelId);
         return BaseResponse.success();
     }

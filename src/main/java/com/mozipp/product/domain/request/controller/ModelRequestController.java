@@ -7,6 +7,7 @@ import com.mozipp.product.domain.request.entity.RequestStatus;
 import com.mozipp.product.domain.request.service.ModelRequestService;
 import com.mozipp.product.global.handler.response.BaseResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,20 +18,17 @@ import java.util.List;
 public class ModelRequestController {
 
     private final ModelRequestService modelRequestService;
-    private final UserFindService userFindService;
 
     // Model 예약 요청
     @PostMapping
-    public BaseResponse<Object> createModelReservationRequest(@RequestBody ModelRequestCreateDto request, @RequestHeader("Authorization") String authorizationHeader){
-        Long modelId = userFindService.getUserId(authorizationHeader);
+    public BaseResponse<Object> createModelReservationRequest(@RequestBody ModelRequestCreateDto request, @AuthenticationPrincipal Long modelId){
         modelRequestService.createModelReservationRequest(modelId, request);
         return BaseResponse.success();
     }
 
     // Model 예약 요청 리스트 조회
     @GetMapping
-    public BaseResponse<List<ModelRequestListDto>> getModelReservationRequest(@RequestParam("status") RequestStatus status, @RequestHeader("Authorization") String authorizationHeader) {
-        Long modelId = userFindService.getUserId(authorizationHeader);
+    public BaseResponse<List<ModelRequestListDto>> getModelReservationRequest(@RequestParam("status") RequestStatus status, @AuthenticationPrincipal Long modelId) {
         return BaseResponse.success(modelRequestService.getModelReservationRequest(modelId, status));
     }
 

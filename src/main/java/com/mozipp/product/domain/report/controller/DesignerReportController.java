@@ -9,6 +9,7 @@ import com.mozipp.product.global.handler.response.BaseResponseStatus;
 import com.mozipp.product.users.Designer;
 import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,8 +22,7 @@ public class DesignerReportController {
 
     // Designer 신고 등록
     @PostMapping
-    public BaseResponse<Object> createDesignerReport(@RequestBody DesignerReportCreateDto request, @RequestHeader("Authorization") String authorizationHeader) {
-        Long designerId = userFindService.getUserId(authorizationHeader);
+    public BaseResponse<Object> createDesignerReport(@RequestBody DesignerReportCreateDto request, @AuthenticationPrincipal Long designerId) {
         designerReportService.createDesignerReport(request, designerId);
         return BaseResponse.success();
     }

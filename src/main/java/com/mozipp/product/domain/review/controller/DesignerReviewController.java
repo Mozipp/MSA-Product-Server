@@ -5,6 +5,7 @@ import com.mozipp.product.domain.review.dto.DesignerReviewCreateDto;
 import com.mozipp.product.domain.review.service.DesignerReviewService;
 import com.mozipp.product.global.handler.response.BaseResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,8 +18,7 @@ public class DesignerReviewController {
 
     // Designer 리뷰 등록
     @PostMapping
-    public BaseResponse<Object> createDesignerReview(@RequestBody DesignerReviewCreateDto request, @RequestHeader("Authorization") String authorizationHeader){
-        Long designerId = userFindService.getUserId(authorizationHeader);
+    public BaseResponse<Object> createDesignerReview(@RequestBody DesignerReviewCreateDto request, @AuthenticationPrincipal Long designerId){
         designerReviewService.createDesignerReview(request, designerId);
         return BaseResponse.success();
     }

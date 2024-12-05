@@ -6,6 +6,7 @@ import com.mozipp.product.domain.request.entity.RequestStatus;
 import com.mozipp.product.domain.request.service.DesignerRequestService;
 import com.mozipp.product.global.handler.response.BaseResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +21,7 @@ public class DesignerRequestController {
 
     // Designer 예약 요청 리스트 조회
     @GetMapping
-    public BaseResponse<List<DesignerRequestListDto>> getReservationRequestList(@RequestParam("status") RequestStatus status, @RequestHeader("Authorization") String authorizationHeader) {
-        Long designerId = userFindService.getUserId(authorizationHeader);
+    public BaseResponse<List<DesignerRequestListDto>> getReservationRequestList(@RequestParam("status") RequestStatus status, @AuthenticationPrincipal Long designerId) {
         List<DesignerRequestListDto> designerRequestList = designerReservationRequestService.getReservationRequestList(designerId, status);
         return BaseResponse.success(designerRequestList);
     }
