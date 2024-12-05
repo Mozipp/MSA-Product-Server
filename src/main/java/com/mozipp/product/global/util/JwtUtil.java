@@ -64,6 +64,7 @@ public class JwtUtil {
         logger.debug("Extracting claims from token...");
         try {
             return Jwts.parserBuilder()
+                    .setSigningKey(keyPair.getPublic())
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
