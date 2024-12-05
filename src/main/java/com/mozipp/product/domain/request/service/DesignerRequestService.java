@@ -14,7 +14,9 @@ import com.mozipp.product.domain.reservation.repository.ReservationRepository;
 import com.mozipp.product.domain.review.service.ModelReviewService;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
+import com.mozipp.product.global.notification.NotificationService;
 import com.mozipp.product.users.Designer;
+import com.mozipp.product.users.Model;
 import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,7 @@ public class DesignerRequestService {
     private final ReservationRepository reservationRepository;
     private final ModelReviewService modelReviewService;
     private final DesignerRepository designerRepository;
+    private final NotificationService notificationService;
 
     @Transactional
     public void acceptReservationRequest(Long reservationRequestId) {
@@ -49,6 +52,11 @@ public class DesignerRequestService {
                 .build();
 
         reservationRepository.save(reservation);
+
+        Model model = request.getModel(); // ReservationRequest에 Model 참조가 있다고 가정
+        Long modelId = model.getId();
+        String message = "귀하의 예약 요청이 수락되었습니다: " + designerProduct.getTitle();
+        notificationService.sendNotification(modelId, "reservation-accepted", message);
     }
 
     @Transactional
@@ -60,6 +68,12 @@ public class DesignerRequestService {
 
         DesignerProduct designerProduct = request.getDesignerProduct();
         designerProduct.updateProductStatus(ProductStatus.AVAILABLE);
+
+        // 모델에게 알림 트리거
+        Model model = request.getModel(); // ReservationRequest에 Model 참조가 있다고 가정
+        Long modelId = model.getId();
+        String message = "귀하의 예약 요청이 거절되었습니다: " + designerProduct.getTitle();
+        notificationService.sendNotification(modelId, "reservation-rejected", message);
     }
 
     public List<DesignerRequestListDto> getReservationRequestList(Long designerId, RequestStatus status) {

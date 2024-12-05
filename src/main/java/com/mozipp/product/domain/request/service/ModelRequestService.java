@@ -11,6 +11,7 @@ import com.mozipp.product.domain.request.entity.ReservationRequest;
 import com.mozipp.product.domain.request.repository.ReservationRequestRepository;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
+import com.mozipp.product.global.notification.NotificationService;
 import com.mozipp.product.users.Model;
 import com.mozipp.product.users.repository.ModelRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class ModelRequestService {
     private final ReservationRequestRepository reservationRequestRepository;
     private final DesignerProductRepository designerProductRepository;
     private final ModelRepository modelRepository;
+    private final NotificationService notificationService;
 
     @Transactional
     public void createModelReservationRequest(Long modelId, ModelRequestCreateDto request) {
@@ -38,6 +40,10 @@ public class ModelRequestService {
         ReservationRequest reservationRequest = ReservationRequestConverter.toReservationRequest(model, designerProduct, request);
         designerProduct.updateProductStatus(ProductStatus.UNAVAILABLE);
         reservationRequestRepository.save(reservationRequest);
+
+        Long designerId = designerProduct.getDesigner().getId();
+        String message = "귀하의 제품에 새로운 예약 요청이 들어왔습니다: " + designerProduct.getTitle();
+        notificationService.sendNotification(designerId,"reservation-request", message);
     }
 
     public List<ModelRequestListDto> getModelReservationRequest(Long modelId, RequestStatus status) {
