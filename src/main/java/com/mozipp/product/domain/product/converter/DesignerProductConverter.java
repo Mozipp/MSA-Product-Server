@@ -2,6 +2,7 @@ package com.mozipp.product.domain.product.converter;
 
 import com.mozipp.product.domain.product.dto.DesignerProductCreateDto;
 import com.mozipp.product.domain.product.dto.DesignerProductListDto;
+import com.mozipp.product.domain.product.dto.DesignerProductPortfolioDto;
 import com.mozipp.product.domain.product.dto.DesignerProductProfileDto;
 import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.product.entity.ProductStatus;
@@ -80,6 +81,17 @@ public class DesignerProductConverter {
                 .petShopName(petShop.getPetShopName())
                 .address(petShop.getAddress())
                 .addressDetail(petShop.getAddressDetail())
+                .build();
+    }
+
+    public static DesignerProduct toDesignerProductPortfolio(DesignerProductPortfolioDto request) {
+        return DesignerProduct.builder()
+                .title(request.getTitle())
+                .introduction(request.getIntroduction())
+                .design(request.getDesign())
+                .modelPreferDescription(request.getModelPreferDescription())
+                .preferBreed(request.getPreferBreed())
+                .productStatus(ProductStatus.AVAILABLE)
                 .build();
     }
 }

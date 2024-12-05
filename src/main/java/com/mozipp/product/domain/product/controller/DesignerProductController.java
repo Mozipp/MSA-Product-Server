@@ -2,6 +2,7 @@ package com.mozipp.product.domain.product.controller;
 
 import com.mozipp.product.domain.product.dto.DesignerProductCreateDto;
 import com.mozipp.product.domain.product.dto.DesignerProductListDto;
+import com.mozipp.product.domain.product.dto.DesignerProductPortfolioDto;
 import com.mozipp.product.domain.product.dto.DesignerProductProfileDto;
 import com.mozipp.product.domain.product.entity.ProductStatus;
 import com.mozipp.product.domain.product.service.DesignerProductService;
@@ -32,6 +33,14 @@ public class DesignerProductController {
     public BaseResponse<Object> createDesignerProduct(@RequestBody DesignerProductCreateDto request, @RequestHeader("Authorization") String authorizationHeader){
         Long designerId = userFindService.getUserId(authorizationHeader);
         designerProductService.createDesignerProduct(request, designerId);
+        return BaseResponse.success();
+    }
+
+    // Designer 상품 등록 + Designer Portfolio 등록
+    @PostMapping("/portfolio")
+    public BaseResponse<Object> createDesignerProductAndPortfolio(@RequestBody DesignerProductPortfolioDto request, @RequestHeader("Authorization") String authorizationHeader){
+        Long designerId = userFindService.getUserId(authorizationHeader);
+        designerProductService.createDesignerProductAndPortfolio(request, designerId);
         return BaseResponse.success();
     }
 

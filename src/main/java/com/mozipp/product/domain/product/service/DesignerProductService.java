@@ -3,6 +3,7 @@ package com.mozipp.product.domain.product.service;
 import com.mozipp.product.domain.product.converter.DesignerProductConverter;
 import com.mozipp.product.domain.product.dto.DesignerProductCreateDto;
 import com.mozipp.product.domain.product.dto.DesignerProductListDto;
+import com.mozipp.product.domain.product.dto.DesignerProductPortfolioDto;
 import com.mozipp.product.domain.product.dto.DesignerProductProfileDto;
 import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.product.entity.ProductStatus;
@@ -71,5 +72,16 @@ public class DesignerProductService {
                 reviews
         );
 
+    }
+
+    @Transactional
+    public void createDesignerProductAndPortfolio(DesignerProductPortfolioDto request, Long designerId) {
+        Designer designer = designerRepository.findById(designerId)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
+        DesignerProduct designerProduct = DesignerProductConverter.toDesignerProductPortfolio(request);
+        designerProduct.updateDesigner(designer);
+        designerProductRepository.save(designerProduct);
+
+        //User 서버와 통신하여 naverPlaceUrl 정보를 Portfolio Entity에 저장해야함
     }
 }
