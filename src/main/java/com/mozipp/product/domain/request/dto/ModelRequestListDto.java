@@ -17,15 +17,17 @@ public class ModelRequestListDto {
     private String modelDescription;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime reservationRequestDate;
+    private RequestProductDto designerProduct;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
 
     @Builder
-    public ModelRequestListDto(Long reservationRequestId, RequestStatus reservationRequestStatus, String modelDescription, LocalDateTime reservationRequestDate, LocalDateTime createdAt) {
+    public ModelRequestListDto(Long reservationRequestId, RequestStatus reservationRequestStatus, String modelDescription, LocalDateTime reservationRequestDate, RequestProductDto designerProduct, LocalDateTime createdAt) {
         this.reservationRequestId = reservationRequestId;
         this.reservationRequestStatus = reservationRequestStatus;
         this.modelDescription = modelDescription;
         this.reservationRequestDate = reservationRequestDate;
+        this.designerProduct = designerProduct;
         this.createdAt = createdAt;
     }
 }

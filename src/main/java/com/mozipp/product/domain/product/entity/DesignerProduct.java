@@ -18,7 +18,7 @@ public class DesignerProduct extends BaseTimeEntity {
     private Long id;
 
     private String title;
-    private String description;
+    private String introduction;
     private String design;
     private String modelPreferDescription;
     private String preferBreed;
@@ -30,9 +30,9 @@ public class DesignerProduct extends BaseTimeEntity {
     private Designer designer;
 
     @Builder
-    public DesignerProduct(String title, String description, String design, String modelPreferDescription, String preferBreed, ProductStatus productStatus) {
+    public DesignerProduct(String title, String introduction, String design, String modelPreferDescription, String preferBreed, ProductStatus productStatus) {
         this.title = title;
-        this.description = description;
+        this.introduction = introduction;
         this.design = design;
         this.modelPreferDescription = modelPreferDescription;
         this.preferBreed = preferBreed;
