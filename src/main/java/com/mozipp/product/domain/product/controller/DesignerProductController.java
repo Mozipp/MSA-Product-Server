@@ -6,7 +6,6 @@ import com.mozipp.product.domain.product.dto.DesignerProductPortfolioDto;
 import com.mozipp.product.domain.product.dto.DesignerProductProfileDto;
 import com.mozipp.product.domain.product.entity.ProductStatus;
 import com.mozipp.product.domain.product.service.DesignerProductService;
-import com.mozipp.product.domain.product.service.UserFindService;
 import com.mozipp.product.global.handler.response.BaseResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,6 @@ import java.util.List;
 public class DesignerProductController {
 
     private final DesignerProductService designerProductService;
-    private final UserFindService userFindService;
 
     // Designer 상품 페이지 목록 조회
     @GetMapping

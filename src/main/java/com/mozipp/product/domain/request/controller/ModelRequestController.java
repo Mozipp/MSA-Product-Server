@@ -1,6 +1,5 @@
 package com.mozipp.product.domain.request.controller;
 
-import com.mozipp.product.domain.product.service.UserFindService;
 import com.mozipp.product.domain.request.dto.ModelRequestCreateDto;
 import com.mozipp.product.domain.request.dto.ModelRequestListDto;
 import com.mozipp.product.domain.request.entity.RequestStatus;
