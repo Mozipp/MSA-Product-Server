@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ModelReservationListDto {
     private Long reservationId;
+    private Long designerProductId;
     private PetShopDto petShop;
     private String design;
     private ReservationStatus reservationStatus;
@@ -23,8 +24,9 @@ public class ModelReservationListDto {
     private LocalDateTime createdAt;
 
     @Builder
-    public ModelReservationListDto(Long reservationId, PetShopDto petShop, String design, ReservationStatus reservationStatus, LocalDateTime reservationRequestDate, LocalDateTime createdAt) {
+    public ModelReservationListDto(Long reservationId, Long designerProductId, PetShopDto petShop, String design, ReservationStatus reservationStatus, LocalDateTime reservationRequestDate, LocalDateTime createdAt) {
         this.reservationId = reservationId;
+        this.designerProductId = designerProductId;
         this.petShop = petShop;
         this.design = design;
         this.reservationStatus = reservationStatus;

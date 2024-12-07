@@ -1,6 +1,5 @@
 package com.mozipp.product.domain.request.controller;
 
-import com.mozipp.product.domain.product.service.UserFindService;
 import com.mozipp.product.domain.request.dto.DesignerRequestListDto;
 import com.mozipp.product.domain.request.entity.RequestStatus;
 import com.mozipp.product.domain.request.service.DesignerRequestService;
@@ -17,7 +16,6 @@ import java.util.List;
 public class DesignerRequestController {
 
     private final DesignerRequestService designerReservationRequestService;
-    private final UserFindService userFindService;
 
     // Designer 예약 요청 리스트 조회
     @GetMapping

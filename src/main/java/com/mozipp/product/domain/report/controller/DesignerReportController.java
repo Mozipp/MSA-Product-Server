@@ -1,16 +1,14 @@
 package com.mozipp.product.domain.report.controller;
 
-import com.mozipp.product.domain.product.service.UserFindService;
 import com.mozipp.product.domain.report.dto.DesignerReportCreateDto;
 import com.mozipp.product.domain.report.service.DesignerReportService;
-import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponse;
-import com.mozipp.product.global.handler.response.BaseResponseStatus;
-import com.mozipp.product.users.Designer;
-import com.mozipp.product.users.repository.DesignerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class DesignerReportController {
 
     private final DesignerReportService designerReportService;
-    private final UserFindService userFindService;
 
     // Designer 신고 등록
     @PostMapping

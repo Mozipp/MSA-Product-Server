@@ -1,6 +1,5 @@
 package com.mozipp.product.domain.reservation.controller;
 
-import com.mozipp.product.domain.product.service.UserFindService;
 import com.mozipp.product.domain.reservation.dto.DesignerReservationHandleDto;
 import com.mozipp.product.domain.reservation.dto.DesignerReservationListDto;
 import com.mozipp.product.domain.reservation.entity.ReservationStatus;
@@ -18,7 +17,6 @@ import java.util.List;
 public class DesignerReservationController {
 
     private final DesignerReservationService designerReservationService;
-    private final UserFindService userFindService;
 
     // Designer 예약 확정 리스트 조회
     @GetMapping
