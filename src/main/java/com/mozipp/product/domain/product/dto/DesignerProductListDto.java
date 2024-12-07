@@ -2,6 +2,7 @@ package com.mozipp.product.domain.product.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mozipp.product.domain.product.entity.ProductStatus;
+import com.mozipp.product.domain.product.entity.TransactionStatus;
 import com.mozipp.product.users.PetShopDto;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -21,12 +22,13 @@ public class DesignerProductListDto {
     private String modelPreferDescription;
     private String preferBreed;
     private ProductStatus productStatus;
+    private TransactionStatus transactionStatus;
     private PetShopDto petShop;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
 
     @Builder
-    public DesignerProductListDto(Long designerProductId, String title, String introduction, String design, String modelPreferDescription, String preferBreed, ProductStatus productStatus, PetShopDto petShop, LocalDateTime createdAt) {
+    public DesignerProductListDto(Long designerProductId, String title, String introduction, String design, String modelPreferDescription, String preferBreed, ProductStatus productStatus, TransactionStatus transactionStatus , PetShopDto petShop, LocalDateTime createdAt) {
         this.designerProductId = designerProductId;
         this.title = title;
         this.introduction = introduction;
@@ -34,6 +36,7 @@ public class DesignerProductListDto {
         this.modelPreferDescription = modelPreferDescription;
         this.preferBreed = preferBreed;
         this.productStatus = productStatus;
+        this.transactionStatus = transactionStatus;
         this.petShop = petShop;
         this.createdAt = createdAt;
     }

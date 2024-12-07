@@ -24,19 +24,22 @@ public class DesignerProduct extends BaseTimeEntity {
     private String preferBreed;
     @Enumerated(EnumType.STRING)
     private ProductStatus productStatus;
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus transactionStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "designer_id")
     private Designer designer;
 
     @Builder
-    public DesignerProduct(String title, String introduction, String design, String modelPreferDescription, String preferBreed, ProductStatus productStatus) {
+    public DesignerProduct(String title, String introduction, String design, String modelPreferDescription, String preferBreed, ProductStatus productStatus, TransactionStatus transactionStatus) {
         this.title = title;
         this.introduction = introduction;
         this.design = design;
         this.modelPreferDescription = modelPreferDescription;
         this.preferBreed = preferBreed;
         this.productStatus = productStatus;
+        this.transactionStatus = transactionStatus;
     }
 
     public void updateDesigner(Designer designer) {
@@ -46,5 +49,9 @@ public class DesignerProduct extends BaseTimeEntity {
 
     public void updateProductStatus(ProductStatus productStatus) {
         this.productStatus = productStatus;
+    }
+
+    public void updateTransactionStatus(TransactionStatus transactionStatus) {
+        this.transactionStatus = transactionStatus;
     }
 }

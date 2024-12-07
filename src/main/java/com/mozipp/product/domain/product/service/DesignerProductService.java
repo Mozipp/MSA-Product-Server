@@ -4,9 +4,12 @@ import com.mozipp.product.domain.product.converter.DesignerProductConverter;
 import com.mozipp.product.domain.product.dto.*;
 import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.product.entity.ProductStatus;
+import com.mozipp.product.domain.product.entity.TransactionStatus;
 import com.mozipp.product.domain.product.repository.DesignerProductRepository;
 import com.mozipp.product.domain.request.dto.ReviewDto;
 import com.mozipp.product.domain.review.service.DesignerReviewService;
+import com.mozipp.product.global.config.redis.PortfolioCreationEvent;
+import com.mozipp.product.global.config.redis.RedisEventPublisher;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
 import com.mozipp.product.global.util.CookieUtil;
@@ -36,6 +39,7 @@ public class DesignerProductService {
     private final DesignerRepository designerRepository;
     private final WebClient webClient;
     private final CookieUtil cookieUtil;
+    private final RedisEventPublisher redisEventPublisher;
 
     private static final Logger logger = LoggerFactory.getLogger(DesignerProductService.class);
 
@@ -93,6 +97,11 @@ public class DesignerProductService {
         designerProduct.updateDesigner(designer);
         designerProductRepository.save(designerProduct);
 
+        // 2. Redis 이벤트 발행 (User 서버가 소비하여 Portfolio 생성 시도)
+        PortfolioCreationEvent event = new PortfolioCreationEvent(designerId, request.getNaverPlaceUrl(), designerProduct.getId());
+        redisEventPublisher.publishPortfolioCreationRequest(event);
+
+
         // User 서버와 통신하여 naverPlaceUrl 정보를 Portfolio Entity에 저장
         String naverPlaceUrl = request.getNaverPlaceUrl();
         // 쿠키에서 access_token 추출
@@ -114,5 +123,22 @@ public class DesignerProductService {
                     throw new BaseException(BaseResponseStatus.PORTFOLIO_CREATION_FAILED);
                 })
                 .block(); // 블로킹 호출
+    }
+
+    @Transactional
+    public void handlePortfolioCreated(Long productId) {
+        DesignerProduct product = designerProductRepository.findById(productId)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_PRODUCT));
+        product.updateTransactionStatus(TransactionStatus.CONFIRMED);
+        logger.info("Product with ID {} has been created.", productId);
+    }
+
+    @Transactional
+    public void handlePortfolioCreationFailed(Long productId) {
+        DesignerProduct product = designerProductRepository.findById(productId)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_PRODUCT));
+        product.updateTransactionStatus(TransactionStatus.FAILED);
+        designerProductRepository.delete(product);
+        logger.info("Product with ID {} has been deleted after portfolio creation failure.", productId);
     }
 }

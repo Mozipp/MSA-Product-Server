@@ -6,6 +6,7 @@ import com.mozipp.product.domain.product.dto.DesignerProductPortfolioDto;
 import com.mozipp.product.domain.product.dto.DesignerProductProfileDto;
 import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.product.entity.ProductStatus;
+import com.mozipp.product.domain.product.entity.TransactionStatus;
 import com.mozipp.product.domain.request.dto.ReviewDto;
 import com.mozipp.product.users.PetGroomingImage;
 import com.mozipp.product.users.PetGroomingImageDto;
@@ -92,6 +93,7 @@ public class DesignerProductConverter {
                 .modelPreferDescription(request.getModelPreferDescription())
                 .preferBreed(request.getPreferBreed())
                 .productStatus(ProductStatus.AVAILABLE)
+                .transactionStatus(TransactionStatus.PENDING)
                 .build();
     }
 }
