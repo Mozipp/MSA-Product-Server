@@ -1,10 +1,7 @@
 package com.mozipp.product.domain.product.service;
 
 import com.mozipp.product.domain.product.converter.DesignerProductConverter;
-import com.mozipp.product.domain.product.dto.DesignerProductCreateDto;
-import com.mozipp.product.domain.product.dto.DesignerProductListDto;
-import com.mozipp.product.domain.product.dto.DesignerProductPortfolioDto;
-import com.mozipp.product.domain.product.dto.DesignerProductProfileDto;
+import com.mozipp.product.domain.product.dto.*;
 import com.mozipp.product.domain.product.entity.DesignerProduct;
 import com.mozipp.product.domain.product.entity.ProductStatus;
 import com.mozipp.product.domain.product.repository.DesignerProductRepository;
@@ -12,12 +9,17 @@ import com.mozipp.product.domain.request.dto.ReviewDto;
 import com.mozipp.product.domain.review.service.DesignerReviewService;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
+import com.mozipp.product.global.util.CookieUtil;
 import com.mozipp.product.users.PetShop;
 import com.mozipp.product.users.Designer;
 import com.mozipp.product.users.PetGroomingImage;
 import com.mozipp.product.users.PetShopDto;
 import com.mozipp.product.users.repository.DesignerRepository;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +35,9 @@ public class DesignerProductService {
     private final DesignerReviewService designerReviewService;
     private final DesignerRepository designerRepository;
     private final WebClient webClient;
+    private final CookieUtil cookieUtil;
+
+    private static final Logger logger = LoggerFactory.getLogger(DesignerProductService.class);
 
     @Value("${user.service.url}")
     private String userServiceUrl;
@@ -81,27 +86,33 @@ public class DesignerProductService {
     }
 
     @Transactional
-    public void createDesignerProductAndPortfolio(DesignerProductPortfolioDto request, Long designerId) {
+    public void createDesignerProductAndPortfolio(HttpServletRequest httpRequest, DesignerProductPortfolioDto request, Long designerId) {
         Designer designer = designerRepository.findById(designerId)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
         DesignerProduct designerProduct = DesignerProductConverter.toDesignerProductPortfolio(request);
         designerProduct.updateDesigner(designer);
         designerProductRepository.save(designerProduct);
 
-//        //User 서버와 통신하여 naverPlaceUrl 정보를 Portfolio Entity에 저장해야함
-//        String naverPlaceUrl = request.getNaverPlaceUrl();
-//
-//        webClient.post()
-//                .uri(userServiceUrl + "/api/users/portfolios")
-//                .headers(headers -> headers.setBearerAuth(accessToken))
-//                .bodyValue(new PortfolioRequest(designerId, request.getNaverPlaceUrl()))
-//                .retrieve()
-//                .bodyToMono(PortfolioResponseDto.class)
-//                .doOnSuccess(response -> logger.info("Portfolio created successfully on User server"))
-//                .doOnError(error -> {
-//                    logger.error("Portfolio creation on User server failed: {}", error.getMessage());
-//                    throw new BaseException(BaseResponseStatus.PORTFOLIO_CREATION_FAILED);
-//                })
-//                .block(); // 블로킹 호출
+        // User 서버와 통신하여 naverPlaceUrl 정보를 Portfolio Entity에 저장
+        String naverPlaceUrl = request.getNaverPlaceUrl();
+        // 쿠키에서 access_token 추출
+        String accessToken = cookieUtil.getCookieValue(httpRequest, "access_token");
+
+        if (accessToken == null) {
+            throw new BaseException(BaseResponseStatus.UNAUTHORIZED); // 적절한 예외 처리
+        }
+
+        webClient.post()
+                .uri(userServiceUrl + "/api/users/portfolios")
+                .headers(headers -> headers.setBearerAuth(accessToken))
+                .bodyValue(new PortfolioRequest(designerId, naverPlaceUrl))
+                .retrieve()
+                .bodyToMono(PortfolioResponseDto.class)
+                .doOnSuccess(response -> logger.info("Portfolio created successfully on User server: portfolioId={}", response.getPortfolioId()))
+                .doOnError(error -> {
+                    logger.info("portfolio create fail");
+                    throw new BaseException(BaseResponseStatus.PORTFOLIO_CREATION_FAILED);
+                })
+                .block(); // 블로킹 호출
     }
 }

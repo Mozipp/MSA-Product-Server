@@ -8,6 +8,7 @@ import com.mozipp.product.domain.product.entity.ProductStatus;
 import com.mozipp.product.domain.product.service.DesignerProductService;
 import com.mozipp.product.domain.product.service.UserFindService;
 import com.mozipp.product.global.handler.response.BaseResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +39,8 @@ public class DesignerProductController {
 
     // Designer 상품 등록 + Designer Portfolio 등록
     @PostMapping("/portfolio")
-    public BaseResponse<Object> createDesignerProductAndPortfolio(@RequestBody DesignerProductPortfolioDto request, @AuthenticationPrincipal Long designerId){
-        designerProductService.createDesignerProductAndPortfolio(request, designerId);
+    public BaseResponse<Object> createDesignerProductAndPortfolio(HttpServletRequest httpRequest, @RequestBody DesignerProductPortfolioDto request, @AuthenticationPrincipal Long designerId){
+        designerProductService.createDesignerProductAndPortfolio(httpRequest, request, designerId);
         return BaseResponse.success();
     }
 
