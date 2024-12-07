@@ -116,7 +116,7 @@ public class DesignerProductService {
 
         webClient.post()
                 .uri(userServiceUrl + "/api/users/portfolios")
-                .headers(headers -> headers.setBearerAuth(accessToken))
+                .cookies(cookies -> cookies.add("access_token", accessToken))
                 .bodyValue(new PortfolioRequest(designerId, naverPlaceUrl))
                 .retrieve()
                 .bodyToMono(PortfolioResponseDto.class)
