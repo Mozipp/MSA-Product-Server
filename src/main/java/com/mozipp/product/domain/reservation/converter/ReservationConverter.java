@@ -28,6 +28,7 @@ public class ReservationConverter {
 
         return ModelReservationListDto.builder()
                 .reservationId(reservation.getId())
+                .designerProductId(designerProduct.getId())
                 .petShop(petShopDto)
                 .design(designerProduct.getDesign())
                 .reservationStatus(reservation.getReservationStatus())
