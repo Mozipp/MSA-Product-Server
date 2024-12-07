@@ -95,37 +95,16 @@ public class DesignerProductService {
         Designer designer = designerRepository.findById(designerId)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
         log.info("================DesignerId=========== ={}", designerId);
+
         DesignerProduct designerProduct = DesignerProductConverter.toDesignerProductPortfolio(request);
         log.info("===============DesignerProduct Title=========== ={}", designerProduct.getTitle());
         designerProduct.updateDesigner(designer);
         designerProductRepository.save(designerProduct);
         log.info("DesignerProduct Save 완료");
+
         // 2. Redis 이벤트 발행 (User 서버가 소비하여 Portfolio 생성 시도)
         PortfolioCreationEvent event = new PortfolioCreationEvent(designerId, request.getNaverPlaceUrl(), designerProduct.getId());
         redisEventPublisher.publishPortfolioCreationRequest(event);
-
-
-        // User 서버와 통신하여 naverPlaceUrl 정보를 Portfolio Entity에 저장
-        String naverPlaceUrl = request.getNaverPlaceUrl();
-        // 쿠키에서 access_token 추출
-        String accessToken = cookieUtil.getCookieValue(httpRequest, "access_token");
-
-        if (accessToken == null) {
-            throw new BaseException(BaseResponseStatus.UNAUTHORIZED); // 적절한 예외 처리
-        }
-
-        webClient.post()
-                .uri(userServiceUrl + "/api/users/portfolios")
-                .cookies(cookies -> cookies.add("access_token", accessToken))
-                .bodyValue(new PortfolioRequest(designerId, naverPlaceUrl))
-                .retrieve()
-                .bodyToMono(PortfolioResponseDto.class)
-                .doOnSuccess(response -> logger.info("Portfolio created successfully on User server: portfolioId={}", response.getPortfolioId()))
-                .doOnError(error -> {
-                    logger.info("portfolio create fail");
-                    throw new BaseException(BaseResponseStatus.PORTFOLIO_CREATION_FAILED);
-                })
-                .block(); // 블로킹 호출
     }
 
     @Transactional
