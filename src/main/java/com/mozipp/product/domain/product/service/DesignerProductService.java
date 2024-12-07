@@ -13,14 +13,14 @@ import com.mozipp.product.global.config.redis.RedisEventPublisher;
 import com.mozipp.product.global.handler.BaseException;
 import com.mozipp.product.global.handler.response.BaseResponseStatus;
 import com.mozipp.product.global.util.CookieUtil;
-import com.mozipp.product.users.PetShop;
 import com.mozipp.product.users.Designer;
 import com.mozipp.product.users.PetGroomingImage;
+import com.mozipp.product.users.PetShop;
 import com.mozipp.product.users.PetShopDto;
 import com.mozipp.product.users.repository.DesignerRepository;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +32,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DesignerProductService {
 
     private final DesignerProductRepository designerProductRepository;
@@ -93,10 +94,12 @@ public class DesignerProductService {
     public void createDesignerProductAndPortfolio(HttpServletRequest httpRequest, DesignerProductPortfolioDto request, Long designerId) {
         Designer designer = designerRepository.findById(designerId)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_DESIGNER));
+        log.info("================DesignerId=========== ={}", designerId);
         DesignerProduct designerProduct = DesignerProductConverter.toDesignerProductPortfolio(request);
+        log.info("===============DesignerProduct Title=========== ={}", designerProduct.getTitle());
         designerProduct.updateDesigner(designer);
         designerProductRepository.save(designerProduct);
-
+        log.info("DesignerProduct Save 완료");
         // 2. Redis 이벤트 발행 (User 서버가 소비하여 Portfolio 생성 시도)
         PortfolioCreationEvent event = new PortfolioCreationEvent(designerId, request.getNaverPlaceUrl(), designerProduct.getId());
         redisEventPublisher.publishPortfolioCreationRequest(event);
