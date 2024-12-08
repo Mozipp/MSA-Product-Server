@@ -2,6 +2,7 @@ package com.mozipp.product.global.notification;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,15 +18,13 @@ public class NotificationController {
 
     // 디자이너용 SSE 구독 엔드포인트
     @GetMapping(value = "/subscribe-designer", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter subscribeDesigner(@RequestHeader("Authorization") String authorizationHeader) {
-        Long designerId = notificationService.getUserIdFromAuthHeader(authorizationHeader);
+    public SseEmitter subscribeDesigner(@AuthenticationPrincipal Long designerId) {
         return notificationService.createEmitter(designerId);
     }
 
     // 모델용 SSE 구독 엔드포인트
     @GetMapping(value = "/subscribe-model", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter subscribeModel(@RequestHeader("Authorization") String authorizationHeader) {
-        Long modelId = notificationService.getUserIdFromAuthHeader(authorizationHeader);
+    public SseEmitter subscribeModel(@AuthenticationPrincipal Long modelId) {
         return notificationService.createEmitter(modelId);
     }
 }
