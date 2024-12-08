@@ -1,7 +1,10 @@
 package com.mozipp.product.global.notification;
 
 import com.mozipp.product.domain.product.service.UserFindService;
+import com.mozipp.product.global.config.redis.RedisListenerConfig;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -15,11 +18,7 @@ public class NotificationService {
 
     // 사용자 ID를 키로 하는 SseEmitter 맵
     private final Map<Long, SseEmitter> emitters = new ConcurrentHashMap<>();
-    private final UserFindService userFindService;
-
-    public Long getUserIdFromAuthHeader(String authorizationHeader) {
-        return userFindService.getUserId(authorizationHeader);
-    }
+    private static final Logger logger = LoggerFactory.getLogger(NotificationService.class);
 
     public SseEmitter createEmitter(Long userId) {
         SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
@@ -30,7 +29,10 @@ public class NotificationService {
             emitter.complete();
             emitters.remove(userId);
         });
-        emitter.onError((e) -> emitters.remove(userId));
+        emitter.onError((e) -> {
+            emitters.remove(userId);
+            emitter.completeWithError(e);
+        });
 
         try {
             emitter.send(SseEmitter.event().name("connected").data("Connection established"));
@@ -51,7 +53,10 @@ public class NotificationService {
             } catch (IOException e) {
                 emitters.remove(userId);
                 emitter.completeWithError(e);
+                logger.info("Failed to send notification to userId: " + userId + ", error: " + e.getMessage());
             }
+        } else {
+            logger.info("No active emitter found for userId: " + userId);
         }
     }
 }
