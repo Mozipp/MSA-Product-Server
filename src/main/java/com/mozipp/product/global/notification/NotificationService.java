@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
@@ -80,9 +81,12 @@ public class NotificationService {
         SseEmitter emitter = emitters.get(userId);
         if (emitter != null) {
             try {
+                // 메시지를 JSON 형식으로 감쌈
+                Map<String, String> data = new HashMap<>();
+                data.put("text", message);
                 emitter.send(SseEmitter.event()
                         .name(eventName)
-                        .data(message));
+                        .data(data)); // JSON 데이터 전송
             } catch (IOException e) {
                 emitters.remove(userId);
                 emitter.completeWithError(e);
